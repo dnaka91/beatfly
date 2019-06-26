@@ -4,7 +4,7 @@
     android:id="@+id/recyclerview"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment.ModeratorListFragment"
-    android:paddingBottom="96dp"
     android:clipToPadding="false"
+    android:paddingBottom="96dp"
+    tools:context=".fragment.ModeratorListFragment"
     tools:listitem="@layout/moderator_item" />

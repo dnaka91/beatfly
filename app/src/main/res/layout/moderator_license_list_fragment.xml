@@ -4,7 +4,5 @@
     android:id="@+id/recyclerview"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:clipToPadding="false"
-    android:paddingBottom="96dp"
-    tools:context=".fragment.LicenseListFragment"
-    tools:listitem="@layout/license_item" />
+    tools:context=".fragment.ModeratorLicenseListFragment"
+    tools:listitem="@layout/moderator_license_item" />

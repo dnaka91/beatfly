@@ -4,6 +4,7 @@
     package="com.github.dnaka91.beatfly">
 
     <application
+        android:name=".BeatFlyApp"
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -25,6 +26,8 @@
             android:label="@string/activity_title_about"
             android:parentActivityName=".activity.MainActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+
+        <service android:name=".service.PlayerService" />
     </application>
 
 </manifest>

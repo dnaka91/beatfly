@@ -7,8 +7,10 @@ import com.github.dnaka91.beatfly.R
 import com.github.dnaka91.beatfly.fragment.HistoryListFragment
 import com.github.dnaka91.beatfly.fragment.ModeratorListFragment
 import com.github.dnaka91.beatfly.fragment.SongDetailFragment
+import javax.inject.Inject
+import kotlin.math.max
 
-class MainPagerAdapter(ctx: Context, fm: FragmentManager) :
+class MainPagerAdapter @Inject constructor(ctx: Context, fm: FragmentManager) :
     FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
     private val fragments = listOf(
@@ -22,4 +24,6 @@ class MainPagerAdapter(ctx: Context, fm: FragmentManager) :
     override fun getItem(position: Int) = fragments[position].second()
 
     override fun getCount() = fragments.size
+
+    fun offscreenLimit() = max(1, fragments.size - 1)
 }

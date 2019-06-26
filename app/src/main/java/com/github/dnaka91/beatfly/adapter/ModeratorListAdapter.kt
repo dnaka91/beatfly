@@ -6,17 +6,20 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
 import com.github.dnaka91.beatfly.R
+import com.github.dnaka91.beatfly.model.Moderator
 import com.github.dnaka91.beatfly.thirdparty.glide.GlideApp
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.moderator_item.*
 import org.jetbrains.anko.support.v4.dip
-import kotlin.random.Random
+import javax.inject.Inject
 
-class ModeratorListAdapter(private val fragment: Fragment) :
+class ModeratorListAdapter @Inject constructor(private val fragment: Fragment) :
     RecyclerView.Adapter<ModeratorListAdapter.ViewHolder>() {
 
     private val inflater = LayoutInflater.from(fragment.context)
+    private var data = listOf<Moderator>()
 
     class ViewHolder(override val containerView: View) :
         RecyclerView.ViewHolder(containerView),
@@ -31,22 +34,29 @@ class ModeratorListAdapter(private val fragment: Fragment) :
             )
         )
 
-    override fun getItemCount(): Int = 3
+    override fun getItemCount(): Int = data.size
+
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val pos = position + 1
+        val moderator = data[position]
         holder.apply {
-            title.text = fragment.getString(R.string.sample_mod_name, pos)
+            title.text = moderator.name
             rating.text = fragment.getString(
-                R.string.sample_mod_rating,
-                Random.nextDouble(5.0),
-                Random.nextInt(10000)
+                R.string.mod_rating,
+                moderator.rating,
+                moderator.rateCount
             )
 
             GlideApp.with(fragment)
-                .load(R.drawable.placeholder_moderator)
+                .load(moderator.picture.url)
+                .placeholder(R.drawable.placeholder_moderator)
                 .transform(RoundedCorners(fragment.dip(4)))
-                .into(albumCover)
+                .transition(withCrossFade())
+                .into(picture)
         }
+    }
 
+    fun setData(list: List<Moderator>) {
+        data = list
+        notifyDataSetChanged()
     }
 }

@@ -1,0 +1,41 @@
+[
+  {
+    "id": "01",
+    "name": "Mister Mister",
+    "rating": 4.33224563,
+    "rateCount": 1276,
+    "picture": {
+      "url": "file:///android_asset/mod_01_picture.webp",
+      "artist": "Clem Onojeghuo",
+      "platform": "Unsplash",
+      "artistUrl": "https://unsplash.com/@clemono2",
+      "platformUrl": "https://unsplash.com/search/photos/dancing"
+    }
+  },
+  {
+    "id": "02",
+    "name": "DJ MC Hamster",
+    "rating": 1.21,
+    "rateCount": 77,
+    "picture": {
+      "url": "file:///android_asset/mod_02_picture.webp",
+      "artist": "Alfonso Scarpa",
+      "platform": "Unsplash",
+      "artistUrl": "https://unsplash.com/@lucidistortephoto",
+      "platformUrl": "https://unsplash.com/search/photos/dj"
+    }
+  },
+  {
+    "id": "03",
+    "name": "THE guy",
+    "rating": 4.913343,
+    "rateCount": 54329,
+    "picture": {
+      "url": "file:///android_asset/mod_03_picture.webp",
+      "artist": "Warren Wong",
+      "platform": "Unsplash",
+      "artistUrl": "https://unsplash.com/@wflwong",
+      "platformUrl": "https://unsplash.com/search/photos/person"
+    }
+  }
+]

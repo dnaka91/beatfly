@@ -1,0 +1,182 @@
+[
+  {
+    "id": "01",
+    "title": "Night Owl",
+    "album": "Directionless EP",
+    "artist": "Broke For Free",
+    "duration": 194120,
+    "platform": "Free Music Archive",
+    "titleUrl": "http://freemusicarchive.org/music/Broke_For_Free/Directionless_EP/Broke_For_Free_-_Directionless_EP_-_01_Night_Owl",
+    "artistUrl": "http://freemusicarchive.org/music/Broke_For_Free",
+    "platformUrl": "http://freemusicarchive.org",
+    "cover": {
+      "url": "file:///android_asset/01_cover.webp",
+      "artist": "Andrew Bui",
+      "platform": "Unsplash",
+      "artistUrl": "https://unsplash.com/@andrewbui",
+      "platformUrl": "https://unsplash.com/search/photos/free"
+    }
+  },
+  {
+    "id": "02",
+    "title": "Enthusiast",
+    "album": "Enthusiast",
+    "artist": "Tours",
+    "duration": 171050,
+    "platform": "Free Music Archive",
+    "titleUrl": "http://freemusicarchive.org/music/Tours/Enthusiast/Tours_-_Enthusiast",
+    "artistUrl": "http://freemusicarchive.org/music/Tours",
+    "platformUrl": "http://freemusicarchive.org",
+    "cover": {
+      "url": "file:///android_asset/02_cover.webp",
+      "artist": "Simon Rae",
+      "platform": "Unsplash",
+      "artistUrl": "https://unsplash.com/@simonrae",
+      "platformUrl": "https://unsplash.com/search/photos/travel"
+    }
+  },
+  {
+    "id": "03",
+    "title": "Siesta",
+    "album": "Traveller's Guide (Excerpt)",
+    "artist": "Jahzzar",
+    "duration": 139700,
+    "platform": "Free Music Archive",
+    "titleUrl": "http://freemusicarchive.org/music/Jahzzar/Travellers_Guide/Siesta",
+    "artistUrl": "http://freemusicarchive.org/music/Jahzzar",
+    "platformUrl": "http://freemusicarchive.org",
+    "cover": {
+      "url": "file:///android_asset/03_cover.webp",
+      "artist": "Alex Plesovskich",
+      "platform": "Unsplash",
+      "artistUrl": "https://unsplash.com/@aples",
+      "platformUrl": "https://unsplash.com/search/photos/siesta"
+    }
+  },
+  {
+    "id": "04",
+    "title": "It's Your Birthday!",
+    "album": "The New Birthday Song Contest",
+    "artist": "Monk Turner + Fascinoma",
+    "duration": 36100,
+    "platform": "Free Music Archive",
+    "titleUrl": "http://freemusicarchive.org/music/Monk_Turner__Fascinoma/The_New_Birthday_Song_Contest/Its_Your_Birthday_1839",
+    "artistUrl": "http://freemusicarchive.org/music/Monk_Turner__Fascinoma",
+    "platformUrl": "http://freemusicarchive.org",
+    "cover": {
+      "url": "file:///android_asset/04_cover.webp",
+      "artist": "Wesley Caribe",
+      "platform": "Unsplash",
+      "artistUrl": "https://unsplash.com/@wesleycaribe",
+      "platformUrl": "https://unsplash.com/search/photos/birthday"
+    }
+  },
+  {
+    "id": "05",
+    "title": "Epic Song",
+    "album": "Nameless: The Hackers RPG Soundtrack",
+    "artist": "BoxCat Games",
+    "duration": 54940,
+    "platform": "Free Music Archive",
+    "titleUrl": "http://freemusicarchive.org/music/BoxCat_Games/Nameless_the_Hackers_RPG_Soundtrack/BoxCat_Games_-_Nameless-_the_Hackers_RPG_Soundtrack_-_10_Epic_Song",
+    "artistUrl": "http://freemusicarchive.org/music/BoxCat_Games",
+    "platformUrl": "http://freemusicarchive.org",
+    "cover": {
+      "url": "file:///android_asset/05_cover.webp",
+      "artist": "Carl Raw",
+      "platform": "Unsplash",
+      "artistUrl": "https://unsplash.com/@carltraw",
+      "platformUrl": "https://unsplash.com/search/photos/arcade-machine"
+    }
+  },
+  {
+    "id": "06",
+    "title": "Fater Lee",
+    "album": "Free Beats Sel. 3",
+    "artist": "Black Ant",
+    "duration": 142970,
+    "platform": "Free Music Archive",
+    "titleUrl": "http://freemusicarchive.org/music/Black_Ant/Free_Beats_Sel_3/Fater_Lee",
+    "artistUrl": "http://freemusicarchive.org/music/Black_Ant",
+    "platformUrl": "http://freemusicarchive.org",
+    "cover": {
+      "url": "file:///android_asset/06_cover.webp",
+      "artist": "Guillaume de Germain",
+      "platform": "Unsplash",
+      "artistUrl": "https://unsplash.com/@guillaumedegermain",
+      "platformUrl": "https://unsplash.com/search/photos/ant"
+    }
+  },
+  {
+    "id": "07",
+    "title": "Hachiko (The Faithtful Dog)",
+    "album": "Wake Up",
+    "artist": "The Kyoto Connection",
+    "duration": 185290,
+    "platform": "Free Music Archive",
+    "titleUrl": "http://freemusicarchive.org/music/The_Kyoto_Connection/Wake_Up_1957/09_Hachiko_The_Faithtful_Dog",
+    "artistUrl": "http://freemusicarchive.org/music/The_Kyoto_Connection",
+    "platformUrl": "http://freemusicarchive.org",
+    "cover": {
+      "url": "file:///android_asset/07_cover.webp",
+      "artist": "Andre Benz",
+      "platform": "Unsplash",
+      "artistUrl": "ttps://unsplash.com/@trapnation",
+      "platformUrl": "ttps://unsplash.com/search/photos/kyoto"
+    }
+  },
+  {
+    "id": "08",
+    "title": "RUNNING WATERS",
+    "album": "Audionautix: Acoustic",
+    "artist": "Jason Shaw",
+    "duration": 166580,
+    "platform": "Free Music Archive",
+    "titleUrl": "http://freemusicarchive.org/music/Jason_Shaw/Audionautix_Acoustic/RUNNING_WATERS______________2-46",
+    "artistUrl": "http://freemusicarchive.org/music/Jason_Shaw",
+    "platformUrl": "http://freemusicarchive.org",
+    "cover": {
+      "url": "file:///android_asset/08_cover.webp",
+      "artist": "Jong Marshes",
+      "platform": "Unsplash",
+      "artistUrl": "https://unsplash.com/@turnlip19",
+      "platformUrl": "ttps://unsplash.com/search/photos/water"
+    }
+  },
+  {
+    "id": "09",
+    "title": "Starling",
+    "album": "Solo Instruments",
+    "artist": "Podington Bear",
+    "duration": 105480,
+    "platform": "Free Music Archive",
+    "titleUrl": "http://freemusicarchive.org/music/Podington_Bear/Solo_Instruments/Starling",
+    "artistUrl": "http://freemusicarchive.org/music/Podington_Bear",
+    "platformUrl": "http://freemusicarchive.org",
+    "cover": {
+      "url": "file:///android_asset/09_cover.webp",
+      "artist": "Janko Ferlič",
+      "platform": "Unsplash",
+      "artistUrl": "https://unsplash.com/@thepootphotographer",
+      "platformUrl": "https://unsplash.com/search/photos/bear"
+    }
+  },
+  {
+    "id": "10",
+    "title": "Springish",
+    "album": "...Plays Guitar",
+    "artist": "Gillicuddy",
+    "duration": 143070,
+    "platform": "Free Music Archive",
+    "titleUrl": "http://freemusicarchive.org/music/gillicuddy/Plays_Guitar/05-springish",
+    "artistUrl": "http://freemusicarchive.org/music/gillicuddy",
+    "platformUrl": "http://freemusicarchive.org",
+    "cover": {
+      "url": "file:///android_asset/10_cover.webp",
+      "artist": "Daiga Ellaby",
+      "platform": "Unsplash",
+      "artistUrl": "https://unsplash.com/@daiga_ellaby",
+      "platformUrl": "https://unsplash.com/search/photos/spring"
+    }
+  }
+]

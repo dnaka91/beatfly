@@ -15,7 +15,14 @@
             app:destination="@id/ossLicensesMenuActivity" />
         <action
             android:id="@+id/action_music_licenses"
-            app:destination="@id/licenseListFragment"
+            app:destination="@id/songLicenseListFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_mod_licenses"
+            app:destination="@id/moderatorLicenseListFragment"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
@@ -23,10 +30,16 @@
     </fragment>
 
     <fragment
-        android:id="@+id/licenseListFragment"
-        android:name="com.github.dnaka91.beatfly.fragment.LicenseListFragment"
+        android:id="@+id/songLicenseListFragment"
+        android:name="com.github.dnaka91.beatfly.fragment.SongLicenseListFragment"
         android:label="@string/nav_label_music_licenses"
-        tools:layout="@layout/license_list_fragment" />
+        tools:layout="@layout/song_license_list_fragment" />
+
+    <fragment
+        android:id="@+id/moderatorLicenseListFragment"
+        android:name="com.github.dnaka91.beatfly.fragment.ModeratorLicenseListFragment"
+        android:label="@string/nav_label_mod_licenses"
+        tools:layout="@layout/moderator_license_list_fragment" />
 
     <activity
         android:id="@+id/ossLicensesMenuActivity"

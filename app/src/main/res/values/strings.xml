@@ -11,6 +11,7 @@
     <string name="nav_label_about">About</string>
     <string name="nav_label_oss_licenses">OSS Licenses</string>
     <string name="nav_label_music_licenses">Music Licenses</string>
+    <string name="nav_label_mod_licenses">Moderator Licenses</string>
 
     <string name="main_tab_header_song">Song</string>
     <string name="main_tab_header_history">History</string>
@@ -18,6 +19,7 @@
 
     <string name="about_oss_licenses">Software licenses</string>
     <string name="about_music_licenses">Music licenses</string>
+    <string name="about_mod_licenses">Moderator licenses</string>
 
     <string name="content_desc_album_cover">Album cover</string>
     <string name="content_desc_mod_picture">Moderator picture</string>
@@ -36,19 +38,18 @@
     <string name="review_message_hint">Message</string>
     <string name="review_submit">Submit</string>
 
-    <string name="sample_song_detail_title">Current Song Title</string>
-    <string name="sample_song_detail_album">Current Song Album</string>
-    <string name="sample_song_detail_artist">Current Song Artist</string>
+    <string name="notification_play">Play</string>
+    <string name="notification_pause">Pause</string>
+    <string name="notification_stop">Stop</string>
+    <string name="notification_channel">Radio Player</string>
 
-    <string name="sample_song_title">Song Title %d</string>
-    <string name="sample_song_album">Album No %d</string>
-    <string name="sample_song_artist">Artist %d</string>
-    <string name="sample_song_duration">%1$d:%2$02d</string>
+    <string name="song_duration">%1$d:%2$02d.%3$03d</string>
 
-    <string name="sample_mod_name">Moderator Name %d</string>
-    <string name="sample_mod_rating">%1$.1f (%2$d)</string>
+    <string name="mod_rating">%1$.1f (%2$d)</string>
 
-    <string name="sample_license_name">&lt;a href=\"%1$s\">Title %2$d&lt;/a></string>
-    <string name="sample_license_song">Song by &lt;a href=\"%1$s\">Singer %2$d&lt;/a> on &lt;a href=\"%3$s\">%4$s&lt;/a></string>
-    <string name="sample_license_cover">Cover by &lt;a href=\"%1$s\">Artist %2$d&lt;/a> on &lt;a href=\"%3$s\">%4$s&lt;/a></string>
+    <string name="song_license_name">&lt;a href=\"%1$s\">%2$s&lt;/a></string>
+    <string name="song_license_artist">Song by &lt;a href=\"%1$s\">%2$s&lt;/a> on &lt;a href=\"%3$s\">%4$s&lt;/a></string>
+    <string name="song_license_cover">Cover by &lt;a href=\"%1$s\">%2$s&lt;/a> on &lt;a href=\"%3$s\">%4$s&lt;/a></string>
+
+    <string name="mod_license_picture">Picture by &lt;a href=\"%1$s\">%2$s&lt;/a> on &lt;a href=\"%3$s\">%4$s&lt;/a></string>
 </resources>

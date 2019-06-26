@@ -7,9 +7,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import com.github.dnaka91.beatfly.NavGraphDirections
 import com.github.dnaka91.beatfly.R
+import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : DaggerAppCompatActivity() {
 
     private var playing = false
 

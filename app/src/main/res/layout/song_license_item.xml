@@ -17,7 +17,7 @@
         tools:text="Title 01" />
 
     <TextView
-        android:id="@+id/song"
+        android:id="@+id/artist"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -35,6 +35,6 @@
         android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/song"
+        app:layout_constraintTop_toBottomOf="@+id/artist"
         tools:text="Cover by Artist on Platform" />
 </androidx.constraintlayout.widget.ConstraintLayout>

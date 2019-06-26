@@ -8,9 +8,10 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.github.dnaka91.beatfly.R
 import com.github.dnaka91.beatfly.extension.hidePlayer
+import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.about_fragment.*
 
-class AboutFragment : Fragment() {
+class AboutFragment : DaggerFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
         inflater.inflate(R.layout.about_fragment, container, false)
@@ -22,6 +23,10 @@ class AboutFragment : Fragment() {
 
         musicLicenses.setOnClickListener {
             findNavController().navigate(AboutFragmentDirections.actionMusicLicenses())
+        }
+
+        modLicenses.setOnClickListener {
+            findNavController().navigate(AboutFragmentDirections.actionModLicenses())
         }
     }
 

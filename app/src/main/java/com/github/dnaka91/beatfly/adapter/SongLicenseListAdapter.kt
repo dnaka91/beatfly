@@ -8,13 +8,16 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.github.dnaka91.beatfly.R
+import com.github.dnaka91.beatfly.model.SongLicense
 import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.license_item.*
+import kotlinx.android.synthetic.main.song_license_item.*
+import javax.inject.Inject
 
-class LicenseListAdapter(private val fragment: Fragment) :
-    RecyclerView.Adapter<LicenseListAdapter.ViewHolder>() {
+class SongLicenseListAdapter @Inject constructor(private val fragment: Fragment) :
+    RecyclerView.Adapter<SongLicenseListAdapter.ViewHolder>() {
 
     private val inflater = LayoutInflater.from(fragment.context)
+    private var data = listOf<SongLicense>()
 
     class ViewHolder(override val containerView: View) :
         RecyclerView.ViewHolder(containerView),
@@ -23,45 +26,54 @@ class LicenseListAdapter(private val fragment: Fragment) :
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
         ViewHolder(
             inflater.inflate(
-                R.layout.license_item,
+                R.layout.song_license_item,
                 parent,
                 false
             )
         )
 
-    override fun getItemCount(): Int = 10
+    override fun getItemCount(): Int = data.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val pos = position + 1
+        val license = data[position]
         holder.apply {
             name.text = Html.fromHtml(
                 fragment.getString(
-                    R.string.sample_license_name,
-                    "https://google.com", pos
+                    R.string.song_license_name,
+                    license.name.url,
+                    license.name.value
                 ),
                 Html.FROM_HTML_MODE_COMPACT
             )
-            song.text = Html.fromHtml(
+            artist.text = Html.fromHtml(
                 fragment.getString(
-                    R.string.sample_license_song,
-                    "https://google.com", pos,
-                    "http://freemusicarchive.org", "Free Music Archive"
+                    R.string.song_license_artist,
+                    license.artist.url,
+                    license.artist.value,
+                    license.platform.url,
+                    license.platform.value
                 ),
                 Html.FROM_HTML_MODE_COMPACT
             )
             cover.text = Html.fromHtml(
                 fragment.getString(
-                    R.string.sample_license_cover,
-                    "https://google.com", pos,
-                    "https://unsplash.com", "Unsplash"
+                    R.string.song_license_cover,
+                    license.cover.artist.url,
+                    license.cover.artist.value,
+                    license.cover.platform.url,
+                    license.cover.platform.value
                 ),
                 Html.FROM_HTML_MODE_COMPACT
             )
 
-            listOf(name, song, cover).forEach {
-                it.movementMethod =
-                    LinkMovementMethod.getInstance()
+            listOf(name, artist, cover).forEach {
+                it.movementMethod = LinkMovementMethod.getInstance()
             }
         }
+    }
+
+    fun setData(list: List<SongLicense>) {
+        data = list
+        notifyDataSetChanged()
     }
 }
