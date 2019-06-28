@@ -29,7 +29,9 @@ import com.github.dnaka91.beatfly.R
 import com.github.dnaka91.beatfly.model.Song
 import org.jetbrains.anko.intentFor
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class PlayerNotificationBuilder @Inject constructor(
     private val context: Context,
     private val notificationManager: NotificationManagerCompat

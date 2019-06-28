@@ -25,8 +25,11 @@
 
     <TextView
         android:id="@+id/title"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:gravity="center"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
         app:layout_constraintBottom_toTopOf="@+id/album"
         app:layout_constraintEnd_toEndOf="parent"
@@ -37,9 +40,12 @@
 
     <TextView
         android:id="@+id/album"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:gravity="center"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
         app:layout_constraintBottom_toTopOf="@+id/artist"
         app:layout_constraintEnd_toEndOf="parent"
@@ -49,9 +55,12 @@
 
     <TextView
         android:id="@+id/artist"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:gravity="center"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

@@ -46,10 +46,5 @@ class PlayerServiceModule {
 
     @ServiceScope
     @Provides
-    fun provideNotificationManagerCompat(service: Service): NotificationManagerCompat =
-        NotificationManagerCompat.from(service)
-
-    @ServiceScope
-    @Provides
     fun provideExoPlayer(context: Context): ExoPlayer = ExoPlayerFactory.newSimpleInstance(context)
 }

@@ -20,19 +20,42 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.get
 import com.github.dnaka91.beatfly.R
+import com.github.dnaka91.beatfly.di.ViewModelFactory
 import com.github.dnaka91.beatfly.di.base.DaggerBottomSheetDialogFragment
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.github.dnaka91.beatfly.viewmodel.ReviewViewModel
+import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.review_fragment.*
+import javax.inject.Inject
 
 class ReviewFragment : DaggerBottomSheetDialogFragment() {
+
+    @Inject
+    internal lateinit var viewModelFactory: ViewModelFactory<ReviewViewModel>
+    private lateinit var viewModel: ReviewViewModel
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get()
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
         inflater.inflate(R.layout.review_fragment, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        viewModel.messageError.observe(this, Observer { reviewLayout.error = it })
+
         submit.setOnClickListener {
-            dismiss()
+            if (viewModel.submit(rating.numStars, review.text.toString())) {
+                Snackbar.make(activity?.toolbar ?: it, "Review submitted", Snackbar.LENGTH_LONG)
+                    .setAnchorView(activity?.toolbar)
+                    .show()
+                dismiss()
+            }
         }
     }
 }

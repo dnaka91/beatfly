@@ -21,12 +21,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.get
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.dnaka91.beatfly.R
 import com.github.dnaka91.beatfly.adapter.ModeratorListAdapter
-import com.github.dnaka91.beatfly.service.RadioService
+import com.github.dnaka91.beatfly.di.ViewModelFactory
+import com.github.dnaka91.beatfly.viewmodel.ModeratorListViewModel
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.moderator_list_fragment.*
 import javax.inject.Inject
@@ -34,7 +37,13 @@ import javax.inject.Inject
 class ModeratorListFragment : DaggerFragment() {
 
     @Inject
-    internal lateinit var radioService: RadioService
+    internal lateinit var viewModelFactory: ViewModelFactory<ModeratorListViewModel>
+    private lateinit var viewModel: ModeratorListViewModel
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get()
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
         inflater.inflate(R.layout.moderator_list_fragment, container, false)
@@ -47,7 +56,7 @@ class ModeratorListFragment : DaggerFragment() {
         recyclerview.itemAnimator = DefaultItemAnimator()
         recyclerview.addItemDecoration(DividerItemDecoration(requireContext(), layoutManager.orientation))
 
-        radioService.loadModerators().observe(this, Observer {
+        viewModel.moderators.observe(this, Observer {
             adapter.setData(it.orEmpty())
         })
     }

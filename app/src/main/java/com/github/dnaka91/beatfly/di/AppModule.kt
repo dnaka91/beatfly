@@ -18,6 +18,7 @@ package com.github.dnaka91.beatfly.di
 
 import android.app.Application
 import android.content.Context
+import androidx.core.app.NotificationManagerCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.github.dnaka91.beatfly.BeatFlyApp
 import com.github.dnaka91.beatfly.service.LocalRadioService
@@ -48,4 +49,9 @@ class AppModule {
     @Provides
     fun provideLocalBroadcastManager(context: Context): LocalBroadcastManager =
         LocalBroadcastManager.getInstance(context)
+
+    @Singleton
+    @Provides
+    fun provideNotificationManagerCompat(context: Context): NotificationManagerCompat =
+        NotificationManagerCompat.from(context)
 }
