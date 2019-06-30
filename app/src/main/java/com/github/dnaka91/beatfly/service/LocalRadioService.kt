@@ -25,10 +25,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.github.dnaka91.beatfly.extension.buffered
 import com.github.dnaka91.beatfly.extension.toSource
-import com.github.dnaka91.beatfly.model.Moderator
-import com.github.dnaka91.beatfly.model.ModeratorLicense
-import com.github.dnaka91.beatfly.model.Song
-import com.github.dnaka91.beatfly.model.SongLicense
+import com.github.dnaka91.beatfly.model.*
 import com.squareup.moshi.JsonAdapter
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -36,9 +33,10 @@ import javax.inject.Singleton
 @Singleton
 class LocalRadioService @Inject constructor(
     context: Context,
+    localBroadcastManager: LocalBroadcastManager,
     songAdapter: JsonAdapter<List<Song>>,
     modAdapter: JsonAdapter<List<Moderator>>,
-    localBroadcastManager: LocalBroadcastManager
+    userAdapter: JsonAdapter<List<User>>
 ) : RadioService {
     private val current = MutableLiveData<Song>()
     private val history = MutableLiveData<List<Song>>()
@@ -48,6 +46,7 @@ class LocalRadioService @Inject constructor(
     private val songLicenses = songs.map { SongLicense.of(it) }
     private val mods = context.loadJson(MODERATORS_FILE, modAdapter)
     private val modLicenses = mods.map { ModeratorLicense.of(it) }
+    private val users = context.loadJson(USERS_FILE, userAdapter)
 
     private val historySongs: MutableList<Song>
     private var currentSong: Song
@@ -80,7 +79,10 @@ class LocalRadioService @Inject constructor(
     }
 
     init {
-        localBroadcastManager.registerReceiver(receiver, IntentFilter(PlayerService.BROADCAST_TRACK_CHANGED))
+        localBroadcastManager.registerReceiver(
+            receiver,
+            IntentFilter(PlayerService.BROADCAST_TRACK_CHANGED)
+        )
     }
 
     override fun currentSong(): LiveData<Song> = current
@@ -93,15 +95,22 @@ class LocalRadioService @Inject constructor(
 
     override fun moderatorLicenses(): List<ModeratorLicense> = modLicenses
 
+    override fun login(username: String, password: String): LoginResponse =
+        users.find { it.username == username && it.password == password }
+            ?.let { LoginResponse.Success(it.username, it.moderator) }
+            ?: LoginResponse.Error
+
     companion object {
         private const val METADATA_FILE = "metadata.json"
         private const val MODERATORS_FILE = "moderators.json"
+        private const val USERS_FILE = "users.json"
         private const val HISTORY_LIMIT = 100
 
-        private fun <T> Context.loadJson(file: String, adapter: JsonAdapter<List<T>>) = assets.open(file)
-            .toSource()
-            .buffered()
-            .use(adapter::fromJson)
-            .orEmpty()
+        private fun <T> Context.loadJson(file: String, adapter: JsonAdapter<List<T>>) =
+            assets.open(file)
+                .toSource()
+                .buffered()
+                .use(adapter::fromJson)
+                .orEmpty()
     }
 }

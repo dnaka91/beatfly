@@ -26,4 +26,6 @@ interface RadioService {
 
     fun songLicenses(): List<SongLicense>
     fun moderatorLicenses(): List<ModeratorLicense>
+
+    fun login(username: String, password: String): LoginResponse
 }

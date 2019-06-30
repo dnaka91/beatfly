@@ -18,6 +18,7 @@ package com.github.dnaka91.beatfly.di
 
 import android.app.Application
 import android.content.Context
+import android.view.inputmethod.InputMethodManager
 import androidx.core.app.NotificationManagerCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.github.dnaka91.beatfly.BeatFlyApp
@@ -54,4 +55,9 @@ class AppModule {
     @Provides
     fun provideNotificationManagerCompat(context: Context): NotificationManagerCompat =
         NotificationManagerCompat.from(context)
+
+    @Singleton
+    @Provides
+    fun provideInputMethodManager(context: Context): InputMethodManager =
+        context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
 }

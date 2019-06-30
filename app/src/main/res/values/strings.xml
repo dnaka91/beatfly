@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">BeatFly</string>
+    <string name="action_logout">Logout</string>
     <string name="action_about">About</string>
     <string name="action_request">Request</string>
     <string name="action_review">Review</string>
@@ -27,15 +28,23 @@
     <string name="login_email_hint">Email</string>
     <string name="login_password_hint">Password</string>
     <string name="login_sign_in">Sign in</string>
+    <string name="login_username_blank">Username missing</string>
+    <string name="login_password_blank">Password missing</string>
+    <string name="login_mismatch">Username &amp; password invalid</string>
 
     <string name="request_header">Wish a song</string>
     <string name="request_song_hint">Song</string>
     <string name="request_artist_hint">Artist</string>
     <string name="request_submit">Submit</string>
+    <string name="request_song_blank">Song title missing</string>
+    <string name="request_artist_blank">Artist name missing</string>
+    <string name="request_submitted">Song wish submitted</string>
 
     <string name="review_header">Review playlist</string>
     <string name="review_message_hint">Message</string>
     <string name="review_submit">Submit</string>
+    <string name="review_message_blank">Message missing</string>
+    <string name="review_submitted">Review submitted</string>
 
     <string name="notification_play">Play</string>
     <string name="notification_pause">Pause</string>

@@ -27,6 +27,8 @@ import com.github.dnaka91.beatfly.R
 import com.github.dnaka91.beatfly.di.ViewModelFactory
 import com.github.dnaka91.beatfly.di.base.DaggerBottomSheetDialogFragment
 import com.github.dnaka91.beatfly.viewmodel.RequestViewModel
+import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.request_fragment.*
 import javax.inject.Inject
 
@@ -50,6 +52,13 @@ class RequestFragment : DaggerBottomSheetDialogFragment() {
 
         submit.setOnClickListener {
             if (viewModel.submit(song.text.toString(), artist.text.toString())) {
+                Snackbar.make(
+                    requireActivity().fab,
+                    getString(R.string.request_submitted),
+                    Snackbar.LENGTH_LONG
+                )
+                    .setAnchorView(requireActivity().fab)
+                    .show()
                 dismiss()
             }
         }

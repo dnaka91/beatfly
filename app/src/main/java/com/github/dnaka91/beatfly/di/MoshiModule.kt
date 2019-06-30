@@ -16,10 +16,10 @@
  */
 package com.github.dnaka91.beatfly.di
 
-import com.github.dnaka91.beatfly.extension.adapter
 import com.github.dnaka91.beatfly.extension.listAdapter
 import com.github.dnaka91.beatfly.model.Moderator
 import com.github.dnaka91.beatfly.model.Song
+import com.github.dnaka91.beatfly.model.User
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import dagger.Module
@@ -35,9 +35,16 @@ class MoshiModule {
 
     @Singleton
     @Provides
-    fun provideSongListJsonAdapter(moshi: Moshi): JsonAdapter<List<Song>> = moshi.listAdapter()
+    fun provideSongListJsonAdapter(moshi: Moshi): JsonAdapter<List<Song>> =
+        moshi.listAdapter()
 
     @Singleton
     @Provides
-    fun provideModeratorListJsonAdapter(moshi: Moshi): JsonAdapter<List<Moderator>> = moshi.listAdapter()
+    fun provideModeratorListJsonAdapter(moshi: Moshi): JsonAdapter<List<Moderator>> =
+        moshi.listAdapter()
+
+    @Singleton
+    @Provides
+    fun provideUserListJsonAdapter(moshi: Moshi): JsonAdapter<List<User>> =
+        moshi.listAdapter()
 }

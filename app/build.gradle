@@ -1,5 +1,5 @@
 plugins {
-    id 'com.android.application' version '3.5.0-beta04'
+    id 'com.android.application' version '3.5.0-beta05'
     id 'com.google.android.gms.oss-licenses-plugin' version '0.9.5'
     id 'com.diffplug.gradle.spotless' version '3.23.1'
     id 'io.gitlab.arturbosch.detekt' version '1.0.0-RC15'
@@ -20,11 +20,23 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         resConfigs 'en'
     }
+    signingConfigs {
+        release {
+            def props = new Properties()
+            props.load(rootProject.file('local.properties').newInputStream())
+
+            storeFile = rootProject.file('keystore.jks')
+            storePassword = props.get('keystore.password')
+            keyAlias = props.get('keystore.key-alias')
+            keyPassword = props.get('keystore.key-password')
+        }
+    }
     buildTypes {
         release {
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
     compileOptions {
@@ -66,7 +78,6 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta1'
     implementation 'androidx.core:core-ktx:1.1.0-rc01'
     implementation 'androidx.fragment:fragment-ktx:1.1.0-beta01'
-    //implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0-beta01'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.1.0-beta01'
     implementation 'androidx.lifecycle:lifecycle-common-java8:2.1.0-beta01'

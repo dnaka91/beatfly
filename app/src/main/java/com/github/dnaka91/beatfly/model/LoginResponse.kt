@@ -14,12 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package com.github.dnaka91.beatfly.viewmodel
+package com.github.dnaka91.beatfly.model
 
-import androidx.lifecycle.ViewModel
-import com.github.dnaka91.beatfly.service.RadioService
-import javax.inject.Inject
-
-class ModeratorLicenseListViewModel @Inject constructor(private val radioService: RadioService) : ViewModel() {
-    val licenses get() = radioService.moderatorLicenses()
+sealed class LoginResponse {
+    object Error : LoginResponse()
+    data class Success(val username: String, val moderator: Boolean) : LoginResponse()
 }

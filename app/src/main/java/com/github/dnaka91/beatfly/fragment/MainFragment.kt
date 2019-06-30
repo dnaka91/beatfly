@@ -22,6 +22,7 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
 import android.view.*
+import androidx.core.content.edit
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.navigation.fragment.findNavController
 import com.github.dnaka91.beatfly.R
@@ -32,6 +33,7 @@ import com.github.dnaka91.beatfly.service.PlayerService
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.main_fragment.*
+import org.jetbrains.anko.support.v4.defaultSharedPreferences
 import javax.inject.Inject
 
 class MainFragment : DaggerFragment() {
@@ -44,7 +46,11 @@ class MainFragment : DaggerFragment() {
         setHasOptionsMenu(true)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? =
         inflater.inflate(R.layout.main_fragment, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -55,7 +61,8 @@ class MainFragment : DaggerFragment() {
 
     private var receiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
-            val playing = intent?.getBooleanExtra(PlayerService.EXTRA_STATUS_PLAYING, false) ?: false
+            val playing =
+                intent?.getBooleanExtra(PlayerService.EXTRA_STATUS_PLAYING, false) ?: false
             requireActivity().fab.setImageResource(
                 if (playing) R.drawable.ic_pause_24
                 else R.drawable.ic_play_arrow_24
@@ -72,7 +79,16 @@ class MainFragment : DaggerFragment() {
 
     override fun onResume() {
         super.onResume()
-        localBroadcastManager.registerReceiver(receiver, IntentFilter(PlayerService.BROADCAST_STATUS))
+        if (!defaultSharedPreferences.getBoolean("logged_in", false)) {
+            startService<PlayerService>(PlayerService.ACTION_STOP)
+            findNavController().navigate(MainFragmentDirections.actionLogout())
+            return
+        }
+
+        localBroadcastManager.registerReceiver(
+            receiver,
+            IntentFilter(PlayerService.BROADCAST_STATUS)
+        )
         startService<PlayerService>(PlayerService.ACTION_GET_STATUS)
     }
 
@@ -92,6 +108,14 @@ class MainFragment : DaggerFragment() {
         }
         R.id.action_request -> {
             findNavController().navigate(MainFragmentDirections.actionRequest())
+            true
+        }
+        R.id.action_logout -> {
+            defaultSharedPreferences.edit {
+                putBoolean("logged_in", false)
+            }
+            startService<PlayerService>(PlayerService.ACTION_STOP)
+            findNavController().navigate(MainFragmentDirections.actionLogout())
             true
         }
         else -> super.onOptionsItemSelected(item)

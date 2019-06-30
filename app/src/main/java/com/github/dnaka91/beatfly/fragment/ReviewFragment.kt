@@ -43,7 +43,11 @@ class ReviewFragment : DaggerBottomSheetDialogFragment() {
         viewModel = ViewModelProviders.of(this, viewModelFactory).get()
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? =
         inflater.inflate(R.layout.review_fragment, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -51,8 +55,12 @@ class ReviewFragment : DaggerBottomSheetDialogFragment() {
 
         submit.setOnClickListener {
             if (viewModel.submit(rating.numStars, review.text.toString())) {
-                Snackbar.make(activity?.toolbar ?: it, "Review submitted", Snackbar.LENGTH_LONG)
-                    .setAnchorView(activity?.toolbar)
+                Snackbar.make(
+                    requireActivity().fab,
+                    getString(R.string.review_submitted),
+                    Snackbar.LENGTH_LONG
+                )
+                    .setAnchorView(requireActivity().fab)
                     .show()
                 dismiss()
             }

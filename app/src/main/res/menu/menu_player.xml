@@ -14,5 +14,9 @@
         android:icon="@drawable/ic_playlist_add_24"
         android:title="@string/action_request"
         app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_logout"
+        android:title="@string/action_logout"
+        app:showAsAction="never" />
 
 </menu>
