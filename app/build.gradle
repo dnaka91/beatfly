@@ -68,6 +68,11 @@ spotless {
         trimTrailingWhitespace()
         endWithNewline()
     }
+    format 'xml', {
+        target 'src/**/*.xml'
+        licenseHeaderFile rootProject.file('license.xml'), '<[a-zA-Z]'
+        trimTrailingWhitespace()
+    }
 }
 
 dependencies {
