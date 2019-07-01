@@ -57,6 +57,10 @@ abstract class FragmentBindingModule {
 
     @FragmentScope
     @ContributesAndroidInjector
+    abstract fun reviewListFragment(): ReviewListFragment
+
+    @FragmentScope
+    @ContributesAndroidInjector
     abstract fun songDetailFragment(): SongDetailFragment
 
     @FragmentScope

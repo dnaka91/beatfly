@@ -23,23 +23,22 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.lifecycle.get
-import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.dnaka91.beatfly.R
+import com.github.dnaka91.beatfly.adapter.ReviewListAdapter
 import com.github.dnaka91.beatfly.di.ViewModelFactory
-import com.github.dnaka91.beatfly.di.base.DaggerBottomSheetDialogFragment
-import com.github.dnaka91.beatfly.viewmodel.ReviewViewModel
-import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.review_fragment.*
+import com.github.dnaka91.beatfly.viewmodel.ReviewListViewModel
+import dagger.android.support.DaggerFragment
+import kotlinx.android.synthetic.main.review_list_fragment.*
 import javax.inject.Inject
 
-class ReviewFragment : DaggerBottomSheetDialogFragment() {
+class ReviewListFragment : DaggerFragment() {
 
     @Inject
-    internal lateinit var viewModelFactory: ViewModelFactory<ReviewViewModel>
-    private lateinit var viewModel: ReviewViewModel
-
-    private val args: ReviewFragmentArgs by navArgs()
+    internal lateinit var viewModelFactory: ViewModelFactory<ReviewListViewModel>
+    private lateinit var viewModel: ReviewListViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,24 +50,23 @@ class ReviewFragment : DaggerBottomSheetDialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? =
-        inflater.inflate(R.layout.review_fragment, container, false)
+        inflater.inflate(R.layout.review_list_fragment, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        header.text = getString(args.header)
+        val layoutManager = LinearLayoutManager(requireContext())
+        val adapter = ReviewListAdapter(this)
+        recyclerview.adapter = adapter
+        recyclerview.layoutManager = layoutManager
+        recyclerview.itemAnimator = DefaultItemAnimator()
+        recyclerview.addItemDecoration(
+            DividerItemDecoration(
+                requireContext(),
+                layoutManager.orientation
+            )
+        )
 
-        viewModel.messageError.observe(this, Observer { reviewLayout.error = it })
-
-        submit.setOnClickListener {
-            if (viewModel.submit(rating.numStars, review.text.toString())) {
-                Snackbar.make(
-                    requireActivity().fab,
-                    getString(R.string.review_submitted),
-                    Snackbar.LENGTH_LONG
-                )
-                    .setAnchorView(requireActivity().fab)
-                    .show()
-                dismiss()
-            }
-        }
+        viewModel.reviews.observe(this, Observer {
+            adapter.setData(it.orEmpty())
+        })
     }
 }

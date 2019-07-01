@@ -14,19 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package com.github.dnaka91.beatfly.service
+package com.github.dnaka91.beatfly.viewmodel
 
-import androidx.lifecycle.LiveData
-import com.github.dnaka91.beatfly.model.*
+import androidx.lifecycle.ViewModel
+import com.github.dnaka91.beatfly.service.RadioService
+import javax.inject.Inject
 
-interface RadioService {
-    fun currentSong(): LiveData<Song>
-    fun loadHistory(): LiveData<List<Song>>
-    fun loadModerators(): LiveData<List<Moderator>>
-    fun loadReviews(modId: String): LiveData<List<Review>>
-
-    fun songLicenses(): List<SongLicense>
-    fun moderatorLicenses(): List<ModeratorLicense>
-
-    fun login(username: String, password: String): LoginResponse
+class ReviewListViewModel @Inject constructor(radioService: RadioService) : ViewModel() {
+    val reviews = radioService.loadReviews("02")
 }

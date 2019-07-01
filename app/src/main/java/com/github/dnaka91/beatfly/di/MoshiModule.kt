@@ -18,6 +18,7 @@ package com.github.dnaka91.beatfly.di
 
 import com.github.dnaka91.beatfly.extension.listAdapter
 import com.github.dnaka91.beatfly.model.Moderator
+import com.github.dnaka91.beatfly.model.Review
 import com.github.dnaka91.beatfly.model.Song
 import com.github.dnaka91.beatfly.model.User
 import com.squareup.moshi.JsonAdapter
@@ -41,6 +42,11 @@ class MoshiModule {
     @Singleton
     @Provides
     fun provideModeratorListJsonAdapter(moshi: Moshi): JsonAdapter<List<Moderator>> =
+        moshi.listAdapter()
+
+    @Singleton
+    @Provides
+    fun provideReviewListJsonAdapter(moshi: Moshi): JsonAdapter<List<Review>> =
         moshi.listAdapter()
 
     @Singleton

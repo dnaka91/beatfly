@@ -36,6 +36,7 @@ class LocalRadioService @Inject constructor(
     localBroadcastManager: LocalBroadcastManager,
     songAdapter: JsonAdapter<List<Song>>,
     modAdapter: JsonAdapter<List<Moderator>>,
+    reviewAdapter: JsonAdapter<List<Review>>,
     userAdapter: JsonAdapter<List<User>>
 ) : RadioService {
     private val current = MutableLiveData<Song>()
@@ -46,6 +47,7 @@ class LocalRadioService @Inject constructor(
     private val songLicenses = songs.map { SongLicense.of(it) }
     private val mods = context.loadJson(MODERATORS_FILE, modAdapter)
     private val modLicenses = mods.map { ModeratorLicense.of(it) }
+    private val reviews = context.loadJson(REVIEWS_FILE, reviewAdapter)
     private val users = context.loadJson(USERS_FILE, userAdapter)
 
     private val historySongs: MutableList<Song>
@@ -91,6 +93,10 @@ class LocalRadioService @Inject constructor(
 
     override fun loadModerators(): LiveData<List<Moderator>> = moderators
 
+    override fun loadReviews(modId: String): LiveData<List<Review>> =
+        reviews.filter { it.modId == modId }
+            .let(::MutableLiveData)
+
     override fun songLicenses(): List<SongLicense> = songLicenses
 
     override fun moderatorLicenses(): List<ModeratorLicense> = modLicenses
@@ -103,6 +109,7 @@ class LocalRadioService @Inject constructor(
     companion object {
         private const val METADATA_FILE = "metadata.json"
         private const val MODERATORS_FILE = "moderators.json"
+        private const val REVIEWS_FILE = "reviews.json"
         private const val USERS_FILE = "users.json"
         private const val HISTORY_LIMIT = 100
 

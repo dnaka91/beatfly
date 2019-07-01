@@ -103,7 +103,11 @@ class MainFragment : DaggerFragment() {
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         R.id.action_review -> {
-            findNavController().navigate(MainFragmentDirections.actionReview())
+            val headerRes = when (pager.currentItem) {
+                PAGER_INDEX_MODS -> R.string.review_header_moderator
+                else -> R.string.review_header_playlist
+            }
+            findNavController().navigate(MainFragmentDirections.actionReview(headerRes))
             true
         }
         R.id.action_request -> {
@@ -119,5 +123,9 @@ class MainFragment : DaggerFragment() {
             true
         }
         else -> super.onOptionsItemSelected(item)
+    }
+
+    companion object {
+        private const val PAGER_INDEX_MODS = 2
     }
 }

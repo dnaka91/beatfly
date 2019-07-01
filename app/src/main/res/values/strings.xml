@@ -31,6 +31,7 @@
     <string name="main_tab_header_song">Song</string>
     <string name="main_tab_header_history">History</string>
     <string name="main_tab_header_moderators">Mods</string>
+    <string name="main_tab_header_reviews">Reviews</string>
 
     <string name="about_oss_licenses">Software licenses</string>
     <string name="about_music_licenses">Music licenses</string>
@@ -55,7 +56,8 @@
     <string name="request_artist_blank">Artist name missing</string>
     <string name="request_submitted">Song wish submitted</string>
 
-    <string name="review_header">Review playlist</string>
+    <string name="review_header_playlist">Review playlist</string>
+    <string name="review_header_moderator">Review moderator</string>
     <string name="review_message_hint">Message</string>
     <string name="review_submit">Submit</string>
     <string name="review_message_blank">Message missing</string>

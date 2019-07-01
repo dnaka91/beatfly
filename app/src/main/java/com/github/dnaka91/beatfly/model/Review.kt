@@ -14,19 +14,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package com.github.dnaka91.beatfly.service
+package com.github.dnaka91.beatfly.model
 
-import androidx.lifecycle.LiveData
-import com.github.dnaka91.beatfly.model.*
+import com.squareup.moshi.JsonClass
 
-interface RadioService {
-    fun currentSong(): LiveData<Song>
-    fun loadHistory(): LiveData<List<Song>>
-    fun loadModerators(): LiveData<List<Moderator>>
-    fun loadReviews(modId: String): LiveData<List<Review>>
-
-    fun songLicenses(): List<SongLicense>
-    fun moderatorLicenses(): List<ModeratorLicense>
-
-    fun login(username: String, password: String): LoginResponse
-}
+@JsonClass(generateAdapter = true)
+data class Review(
+    val modId: String,
+    val username: String,
+    val rating: Double,
+    val message: String
+)

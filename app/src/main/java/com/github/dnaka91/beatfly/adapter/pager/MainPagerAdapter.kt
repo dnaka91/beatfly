@@ -17,25 +17,32 @@
 package com.github.dnaka91.beatfly.adapter.pager
 
 import android.content.Context
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.github.dnaka91.beatfly.R
 import com.github.dnaka91.beatfly.fragment.HistoryListFragment
 import com.github.dnaka91.beatfly.fragment.ModeratorListFragment
+import com.github.dnaka91.beatfly.fragment.ReviewListFragment
 import com.github.dnaka91.beatfly.fragment.SongDetailFragment
+import org.jetbrains.anko.defaultSharedPreferences
 import javax.inject.Inject
 import kotlin.math.max
 
 class MainPagerAdapter @Inject constructor(ctx: Context, fm: FragmentManager) :
     FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
-    private val fragments = listOf(
+    private val fragments = listOf<Pair<String, () -> Fragment>>(
         ctx.getString(R.string.main_tab_header_song) to { SongDetailFragment() },
         ctx.getString(R.string.main_tab_header_history) to { HistoryListFragment() },
-        ctx.getString(R.string.main_tab_header_moderators) to { ModeratorListFragment() }
+        if (ctx.defaultSharedPreferences.getBoolean("moderator", false)) {
+            ctx.getString(R.string.main_tab_header_reviews) to { ReviewListFragment() }
+        } else {
+            ctx.getString(R.string.main_tab_header_moderators) to { ModeratorListFragment() }
+        }
     )
 
-    override fun getPageTitle(position: Int) = fragments[position].first
+    override fun getPageTitle(position: Int): String = fragments[position].first
 
     override fun getItem(position: Int) = fragments[position].second()
 
