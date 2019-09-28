@@ -70,7 +70,7 @@ class PlayerNotificationBuilder @Inject constructor(
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun createNotificationChannel() {
-        if (notificationManager.getNotificationChannel(NOTIFICATION_CHANNEL) != null) {
+        if (notificationManager.getNotificationChannel(NOTIFICATION_CHANNEL) == null) {
             notificationManager.createNotificationChannel(
                 NotificationChannel(
                     NOTIFICATION_CHANNEL,

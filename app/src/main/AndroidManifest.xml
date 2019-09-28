@@ -18,6 +18,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.github.dnaka91.beatfly">
 
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+
     <application
         android:name=".BeatFlyApp"
         android:allowBackup="false"
