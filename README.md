@@ -47,6 +47,17 @@ both debug and release versions. If you don't want to set up your own
 keystore you can run `./gradlew assembleDebug` to only build the debug
 version.
 
+## Login
+
+The application starts with a login form where you either have to 
+login as normal user or as moderator. A sign-up is not provided,
+therefore the following two credentials are preconfigured:
+
+| Username | Password | Type      |
+| -------- | -------- | --------- |
+| user1    | pass1    | User      |
+| user2    | pass2    | Moderator |
+
 ## License
 
 This project is licensed under the [GNU General Public License v3](LICENSE).
