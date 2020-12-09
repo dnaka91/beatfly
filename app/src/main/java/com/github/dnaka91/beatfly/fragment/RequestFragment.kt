@@ -23,22 +23,18 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import com.github.dnaka91.beatfly.R
 import com.github.dnaka91.beatfly.databinding.RequestFragmentBinding
-import com.github.dnaka91.beatfly.di.ViewModelFactory
 import com.github.dnaka91.beatfly.extension.mainActivity
 import com.github.dnaka91.beatfly.viewmodel.RequestViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class RequestFragment : BottomSheetDialogFragment() {
     private var _binding: RequestFragmentBinding? = null
     private val binding get() = _binding!!
 
-    @Inject
-    internal lateinit var viewModelFactory: ViewModelFactory<RequestViewModel>
-    private val viewModel by viewModels<RequestViewModel> { viewModelFactory }
+    private val viewModel by viewModels<RequestViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,

@@ -24,22 +24,18 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.github.dnaka91.beatfly.R
 import com.github.dnaka91.beatfly.databinding.ReviewFragmentBinding
-import com.github.dnaka91.beatfly.di.ViewModelFactory
 import com.github.dnaka91.beatfly.extension.mainActivity
 import com.github.dnaka91.beatfly.viewmodel.ReviewViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class ReviewFragment : BottomSheetDialogFragment() {
     private var _binding: ReviewFragmentBinding? = null
     private val binding get() = _binding!!
 
-    @Inject
-    internal lateinit var viewModelFactory: ViewModelFactory<ReviewViewModel>
-    private val viewModel by viewModels<ReviewViewModel> { viewModelFactory }
+    private val viewModel by viewModels<ReviewViewModel>()
 
     private val args: ReviewFragmentArgs by navArgs()
 

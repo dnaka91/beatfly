@@ -27,19 +27,15 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.dnaka91.beatfly.adapter.HistoryListAdapter
 import com.github.dnaka91.beatfly.databinding.HistoryListFragmentBinding
-import com.github.dnaka91.beatfly.di.ViewModelFactory
 import com.github.dnaka91.beatfly.viewmodel.HistoryListViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class HistoryListFragment : Fragment() {
     private var _binding: HistoryListFragmentBinding? = null
     private val binding get() = _binding!!
 
-    @Inject
-    internal lateinit var viewModelFactory: ViewModelFactory<HistoryListViewModel>
-    private val viewModel by viewModels<HistoryListViewModel> { viewModelFactory }
+    private val viewModel by viewModels<HistoryListViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,

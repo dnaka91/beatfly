@@ -26,7 +26,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.github.dnaka91.beatfly.databinding.LoginFragmentBinding
-import com.github.dnaka91.beatfly.di.ViewModelFactory
 import com.github.dnaka91.beatfly.extension.hidePlayer
 import com.github.dnaka91.beatfly.model.LoginResponse
 import com.github.dnaka91.beatfly.viewmodel.LoginViewModel
@@ -41,9 +40,7 @@ class LoginFragment : Fragment() {
     @Inject
     internal lateinit var inputMethodManager: InputMethodManager
 
-    @Inject
-    internal lateinit var viewModelFactory: ViewModelFactory<LoginViewModel>
-    private val viewModel by viewModels<LoginViewModel> { viewModelFactory }
+    private val viewModel by viewModels<LoginViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,

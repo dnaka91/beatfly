@@ -17,6 +17,7 @@
 package com.github.dnaka91.beatfly.viewmodel
 
 import android.content.Context
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -28,7 +29,7 @@ import dagger.hilt.android.qualifiers.ActivityContext
 import splitties.preferences.edit
 import javax.inject.Inject
 
-class LoginViewModel @Inject constructor(
+class LoginViewModel @ViewModelInject constructor(
     @ActivityContext   private val context: Context,
     private val radioService: RadioService
 ) : ViewModel() {

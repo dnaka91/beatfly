@@ -26,19 +26,15 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.dnaka91.beatfly.adapter.SongLicenseListAdapter
 import com.github.dnaka91.beatfly.databinding.SongLicenseListFragmentBinding
-import com.github.dnaka91.beatfly.di.ViewModelFactory
 import com.github.dnaka91.beatfly.viewmodel.SongLicenseListViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class SongLicenseListFragment : Fragment() {
     private var _binding: SongLicenseListFragmentBinding? = null
     private val binding get() = _binding!!
 
-    @Inject
-    internal lateinit var viewModelFactory: ViewModelFactory<SongLicenseListViewModel>
-    private val viewModel by viewModels<SongLicenseListViewModel> { viewModelFactory }
+    private val viewModel by viewModels<SongLicenseListViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,

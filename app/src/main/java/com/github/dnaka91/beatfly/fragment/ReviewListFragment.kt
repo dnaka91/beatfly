@@ -27,19 +27,15 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.dnaka91.beatfly.adapter.ReviewListAdapter
 import com.github.dnaka91.beatfly.databinding.ReviewListFragmentBinding
-import com.github.dnaka91.beatfly.di.ViewModelFactory
 import com.github.dnaka91.beatfly.viewmodel.ReviewListViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class ReviewListFragment : Fragment() {
     private var _binding: ReviewListFragmentBinding? = null
     private val binding get() = _binding!!
 
-    @Inject
-    internal lateinit var viewModelFactory: ViewModelFactory<ReviewListViewModel>
-    private val viewModel by viewModels<ReviewListViewModel> { viewModelFactory }
+    private val viewModel by viewModels<ReviewListViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,

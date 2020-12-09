@@ -27,19 +27,15 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.dnaka91.beatfly.adapter.ModeratorListAdapter
 import com.github.dnaka91.beatfly.databinding.ModeratorListFragmentBinding
-import com.github.dnaka91.beatfly.di.ViewModelFactory
 import com.github.dnaka91.beatfly.viewmodel.ModeratorListViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class ModeratorListFragment : Fragment() {
     private var _binding: ModeratorListFragmentBinding? = null
     private val binding get() = _binding!!
 
-    @Inject
-    internal lateinit var viewModelFactory: ViewModelFactory<ModeratorListViewModel>
-    private val viewModel by viewModels<ModeratorListViewModel> { viewModelFactory }
+    private val viewModel by viewModels<ModeratorListViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
