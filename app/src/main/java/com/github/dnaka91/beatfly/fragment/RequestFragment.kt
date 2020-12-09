@@ -21,19 +21,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import com.github.dnaka91.beatfly.R
+import com.github.dnaka91.beatfly.databinding.RequestFragmentBinding
 import com.github.dnaka91.beatfly.di.ViewModelFactory
+import com.github.dnaka91.beatfly.extension.mainActivity
 import com.github.dnaka91.beatfly.viewmodel.RequestViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.request_fragment.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class RequestFragment : BottomSheetDialogFragment() {
+    private var _binding: RequestFragmentBinding? = null
+    private val binding get() = _binding!!
 
     @Inject
     internal lateinit var viewModelFactory: ViewModelFactory<RequestViewModel>
@@ -43,24 +44,28 @@ class RequestFragment : BottomSheetDialogFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? =
-        inflater.inflate(R.layout.request_fragment, container, false)
+    ): View {
+        _binding = RequestFragmentBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        viewModel.songError.observe(viewLifecycleOwner, Observer { songLayout.error = it })
-        viewModel.artistError.observe(viewLifecycleOwner, Observer { artistLayout.error = it })
+        viewModel.songError.observe(viewLifecycleOwner) { binding.songLayout.error = it }
+        viewModel.artistError.observe(viewLifecycleOwner) { binding.artistLayout.error = it }
 
-        submit.setOnClickListener {
-            if (viewModel.submit(song.text.toString(), artist.text.toString())) {
-                Snackbar.make(
-                    requireActivity().fab,
+        binding.submit.setOnClickListener {
+            if (viewModel.submit(binding.song.text.toString(), binding.artist.text.toString())) {
+                mainActivity()?.showSnackbar(
                     getString(R.string.request_submitted),
                     Snackbar.LENGTH_LONG
                 )
-                    .setAnchorView(requireActivity().fab)
-                    .show()
                 dismiss()
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

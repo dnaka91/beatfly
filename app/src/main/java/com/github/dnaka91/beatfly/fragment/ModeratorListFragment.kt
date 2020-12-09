@@ -22,20 +22,20 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.github.dnaka91.beatfly.R
 import com.github.dnaka91.beatfly.adapter.ModeratorListAdapter
+import com.github.dnaka91.beatfly.databinding.ModeratorListFragmentBinding
 import com.github.dnaka91.beatfly.di.ViewModelFactory
 import com.github.dnaka91.beatfly.viewmodel.ModeratorListViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.moderator_list_fragment.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class ModeratorListFragment : Fragment() {
+    private var _binding: ModeratorListFragmentBinding? = null
+    private val binding get() = _binding!!
 
     @Inject
     internal lateinit var viewModelFactory: ViewModelFactory<ModeratorListViewModel>
@@ -45,24 +45,31 @@ class ModeratorListFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? =
-        inflater.inflate(R.layout.moderator_list_fragment, container, false)
+    ): View {
+        _binding = ModeratorListFragmentBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val layoutManager = LinearLayoutManager(requireContext())
         val adapter = ModeratorListAdapter(this)
-        recyclerview.adapter = adapter
-        recyclerview.layoutManager = layoutManager
-        recyclerview.itemAnimator = DefaultItemAnimator()
-        recyclerview.addItemDecoration(
+        binding.recyclerview.adapter = adapter
+        binding.recyclerview.layoutManager = layoutManager
+        binding.recyclerview.itemAnimator = DefaultItemAnimator()
+        binding.recyclerview.addItemDecoration(
             DividerItemDecoration(
                 requireContext(),
                 layoutManager.orientation
             )
         )
 
-        viewModel.moderators.observe(viewLifecycleOwner, Observer {
+        viewModel.moderators.observe(viewLifecycleOwner) {
             adapter.setData(it.orEmpty())
-        })
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

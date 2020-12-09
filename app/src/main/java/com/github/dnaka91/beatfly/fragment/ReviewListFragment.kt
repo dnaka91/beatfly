@@ -22,20 +22,20 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.github.dnaka91.beatfly.R
 import com.github.dnaka91.beatfly.adapter.ReviewListAdapter
+import com.github.dnaka91.beatfly.databinding.ReviewListFragmentBinding
 import com.github.dnaka91.beatfly.di.ViewModelFactory
 import com.github.dnaka91.beatfly.viewmodel.ReviewListViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.review_list_fragment.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class ReviewListFragment : Fragment() {
+    private var _binding: ReviewListFragmentBinding? = null
+    private val binding get() = _binding!!
 
     @Inject
     internal lateinit var viewModelFactory: ViewModelFactory<ReviewListViewModel>
@@ -45,24 +45,31 @@ class ReviewListFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? =
-        inflater.inflate(R.layout.review_list_fragment, container, false)
+    ): View {
+        _binding = ReviewListFragmentBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val layoutManager = LinearLayoutManager(requireContext())
         val adapter = ReviewListAdapter(this)
-        recyclerview.adapter = adapter
-        recyclerview.layoutManager = layoutManager
-        recyclerview.itemAnimator = DefaultItemAnimator()
-        recyclerview.addItemDecoration(
+        binding.recyclerview.adapter = adapter
+        binding.recyclerview.layoutManager = layoutManager
+        binding.recyclerview.itemAnimator = DefaultItemAnimator()
+        binding.recyclerview.addItemDecoration(
             DividerItemDecoration(
                 requireContext(),
                 layoutManager.orientation
             )
         )
 
-        viewModel.reviews.observe(viewLifecycleOwner, Observer {
+        viewModel.reviews.observe(viewLifecycleOwner) {
             adapter.setData(it.orEmpty())
-        })
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

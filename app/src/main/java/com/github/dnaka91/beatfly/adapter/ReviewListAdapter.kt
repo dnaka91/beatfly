@@ -17,14 +17,11 @@
 package com.github.dnaka91.beatfly.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
-import com.github.dnaka91.beatfly.R
+import com.github.dnaka91.beatfly.databinding.ReviewItemBinding
 import com.github.dnaka91.beatfly.model.Review
-import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.review_item.*
 import javax.inject.Inject
 
 class ReviewListAdapter @Inject constructor(fragment: Fragment) :
@@ -33,27 +30,20 @@ class ReviewListAdapter @Inject constructor(fragment: Fragment) :
     private val inflater = LayoutInflater.from(fragment.context)
     private var data = listOf<Review>()
 
-    class ViewHolder(override val containerView: View) :
-        RecyclerView.ViewHolder(containerView),
-        LayoutContainer
+    class ViewHolder(val binding: ReviewItemBinding) :
+        RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
-        ViewHolder(
-            inflater.inflate(
-                R.layout.review_item,
-                parent,
-                false
-            )
-        )
+        ViewHolder(ReviewItemBinding.inflate(inflater, parent, false))
 
     override fun getItemCount(): Int = data.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val review = data[position]
         holder.apply {
-            username.text = review.username
-            rating.rating = review.rating.toFloat()
-            message.text = review.message
+            binding.username.text = review.username
+            binding.rating.rating = review.rating.toFloat()
+            binding.message.text = review.message
         }
     }
 

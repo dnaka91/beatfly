@@ -21,20 +21,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
 import com.github.dnaka91.beatfly.R
+import com.github.dnaka91.beatfly.databinding.ReviewFragmentBinding
 import com.github.dnaka91.beatfly.di.ViewModelFactory
+import com.github.dnaka91.beatfly.extension.mainActivity
 import com.github.dnaka91.beatfly.viewmodel.ReviewViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.review_fragment.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class ReviewFragment : BottomSheetDialogFragment() {
+    private var _binding: ReviewFragmentBinding? = null
+    private val binding get() = _binding!!
 
     @Inject
     internal lateinit var viewModelFactory: ViewModelFactory<ReviewViewModel>
@@ -46,25 +47,29 @@ class ReviewFragment : BottomSheetDialogFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? =
-        inflater.inflate(R.layout.review_fragment, container, false)
+    ): View {
+        _binding = ReviewFragmentBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        header.text = getString(args.header)
+        binding.header.text = getString(args.header)
 
-        viewModel.messageError.observe(viewLifecycleOwner, Observer { reviewLayout.error = it })
+        viewModel.messageError.observe(viewLifecycleOwner) { binding.reviewLayout.error = it }
 
-        submit.setOnClickListener {
-            if (viewModel.submit(rating.numStars, review.text.toString())) {
-                Snackbar.make(
-                    requireActivity().fab,
+        binding.submit.setOnClickListener {
+            if (viewModel.submit(binding.rating.numStars, binding.review.text.toString())) {
+                mainActivity()?.showSnackbar(
                     getString(R.string.review_submitted),
                     Snackbar.LENGTH_LONG
                 )
-                    .setAnchorView(requireActivity().fab)
-                    .show()
                 dismiss()
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

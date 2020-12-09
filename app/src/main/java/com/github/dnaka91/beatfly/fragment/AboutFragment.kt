@@ -22,37 +22,39 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.github.dnaka91.beatfly.R
-import com.github.dnaka91.beatfly.extension.hidePlayer
+import com.github.dnaka91.beatfly.databinding.AboutFragmentBinding
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.about_fragment.*
 
 @AndroidEntryPoint
 class AboutFragment : Fragment() {
+    private var _binding: AboutFragmentBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? =
-        inflater.inflate(R.layout.about_fragment, container, false)
+    ): View {
+        _binding = AboutFragmentBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        ossLicenses.setOnClickListener {
+        binding.ossLicenses.setOnClickListener {
             findNavController().navigate(AboutFragmentDirections.actionOssLicenses())
         }
 
-        musicLicenses.setOnClickListener {
+        binding.musicLicenses.setOnClickListener {
             findNavController().navigate(AboutFragmentDirections.actionMusicLicenses())
         }
 
-        modLicenses.setOnClickListener {
+        binding.modLicenses.setOnClickListener {
             findNavController().navigate(AboutFragmentDirections.actionModLicenses())
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        hidePlayer()
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

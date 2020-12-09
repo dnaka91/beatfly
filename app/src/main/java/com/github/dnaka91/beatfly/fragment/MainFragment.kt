@@ -21,28 +21,25 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.navigation.fragment.findNavController
 import com.github.dnaka91.beatfly.AppPreferences
 import com.github.dnaka91.beatfly.R
 import com.github.dnaka91.beatfly.adapter.pager.MainPagerAdapter
+import com.github.dnaka91.beatfly.databinding.MainFragmentBinding
+import com.github.dnaka91.beatfly.extension.mainActivity
 import com.github.dnaka91.beatfly.extension.showPlayer
 import com.github.dnaka91.beatfly.extension.startService
 import com.github.dnaka91.beatfly.service.PlayerService
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.main_fragment.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainFragment : Fragment() {
+    private var _binding: MainFragmentBinding? = null
+    private val binding get() = _binding!!
 
     @Inject
     internal lateinit var localBroadcastManager: LocalBroadcastManager
@@ -56,20 +53,22 @@ class MainFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? =
-        inflater.inflate(R.layout.main_fragment, container, false)
+    ): View {
+        _binding = MainFragmentBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val adapter = MainPagerAdapter(requireContext(), childFragmentManager)
-        pager.offscreenPageLimit = adapter.offscreenLimit()
-        pager.adapter = adapter
+        binding.pager.offscreenPageLimit = adapter.offscreenLimit()
+        binding.pager.adapter = adapter
     }
 
     private var receiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
             val playing =
                 intent?.getBooleanExtra(PlayerService.EXTRA_STATUS_PLAYING, false) ?: false
-            requireActivity().fab.setImageResource(
+            mainActivity()?.setFabIcon(
                 if (playing) R.drawable.ic_pause_24
                 else R.drawable.ic_play_arrow_24
             )
@@ -103,13 +102,18 @@ class MainFragment : Fragment() {
         localBroadcastManager.unregisterReceiver(receiver)
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_player, menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         R.id.action_review -> {
-            val headerRes = when (pager.currentItem) {
+            val headerRes = when (binding.pager.currentItem) {
                 PAGER_INDEX_MODS -> R.string.review_header_moderator
                 else -> R.string.review_header_playlist
             }

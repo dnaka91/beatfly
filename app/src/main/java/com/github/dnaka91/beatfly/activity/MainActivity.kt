@@ -19,23 +19,31 @@ package com.github.dnaka91.beatfly.activity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import androidx.annotation.DrawableRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.view.doOnPreDraw
 import androidx.navigation.findNavController
 import com.github.dnaka91.beatfly.NavGraphDirections
 import com.github.dnaka91.beatfly.R
+import com.github.dnaka91.beatfly.databinding.ActivityMainBinding
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_main.*
+
+typealias Action = (View) -> Unit
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-   
+    private lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        setSupportActionBar(toolbar)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        setSupportActionBar(binding.toolbar)
 
-        toolbar.overflowIcon = ContextCompat.getDrawable(this, R.drawable.ic_more_vert_24)
+        binding.toolbar.overflowIcon = ContextCompat.getDrawable(this, R.drawable.ic_more_vert_24)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -49,5 +57,32 @@ class MainActivity : AppCompatActivity() {
             true
         }
         else -> super.onOptionsItemSelected(item)
+    }
+
+    fun showPlayer(action: Action? = null) {
+        binding.fab.run {
+            doOnPreDraw {
+                binding.fab.show()
+                binding.toolbar.performShow()
+            }
+            setOnClickListener(action)
+        }
+    }
+
+    fun hidePlayer() {
+        binding.fab.doOnPreDraw {
+            binding.fab.hide()
+            binding.toolbar.performHide()
+        }
+    }
+
+    fun setFabIcon(@DrawableRes resId: Int) {
+        binding.fab.setImageResource(resId)
+    }
+
+    fun showSnackbar(text: CharSequence, length: Int) {
+        Snackbar.make(binding.fab, text, length)
+            .setAnchorView(binding.fab)
+            .show()
     }
 }

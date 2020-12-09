@@ -25,15 +25,17 @@ import androidx.lifecycle.Observer
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
 import com.github.dnaka91.beatfly.R
+import com.github.dnaka91.beatfly.databinding.SongDetailFragmentBinding
 import com.github.dnaka91.beatfly.service.RadioService
 import com.github.dnaka91.beatfly.thirdparty.glide.GlideApp
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.song_detail_fragment.*
 import splitties.dimensions.dip
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class SongDetailFragment : Fragment() {
+    private var _binding: SongDetailFragmentBinding? = null
+    private val binding get() = _binding!!
 
     @Inject
     internal lateinit var radioService: RadioService
@@ -42,23 +44,30 @@ class SongDetailFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? =
-        inflater.inflate(R.layout.song_detail_fragment, container, false)
+    ): View {
+        _binding = SongDetailFragmentBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         radioService.currentSong().observe(viewLifecycleOwner, Observer {
             if (it == null) return@Observer
 
-            title.text = it.title
-            album.text = it.album
-            artist.text = it.artist
+            binding.title.text = it.title
+            binding.album.text = it.album
+            binding.artist.text = it.artist
 
             GlideApp.with(this)
                 .load(it.cover.url)
                 .placeholder(R.drawable.placeholder_album)
                 .transform(RoundedCorners(requireContext().dip(8)))
                 .transition(withCrossFade())
-                .into(picture)
+                .into(binding.picture)
         })
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

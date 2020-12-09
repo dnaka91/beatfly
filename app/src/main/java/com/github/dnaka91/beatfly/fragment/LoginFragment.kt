@@ -24,19 +24,19 @@ import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import com.github.dnaka91.beatfly.R
+import com.github.dnaka91.beatfly.databinding.LoginFragmentBinding
 import com.github.dnaka91.beatfly.di.ViewModelFactory
 import com.github.dnaka91.beatfly.extension.hidePlayer
 import com.github.dnaka91.beatfly.model.LoginResponse
 import com.github.dnaka91.beatfly.viewmodel.LoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.login_fragment.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class LoginFragment : Fragment() {
+    private var _binding: LoginFragmentBinding? = null
+    private val binding get() = _binding!!
 
     @Inject
     internal lateinit var inputMethodManager: InputMethodManager
@@ -49,33 +49,38 @@ class LoginFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? =
-        inflater.inflate(R.layout.login_fragment, container, false)
+    ): View {
+        _binding = LoginFragmentBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        viewModel.usernameError.observe(viewLifecycleOwner, Observer { usernameLayout.error = it })
-        viewModel.passwordError.observe(viewLifecycleOwner, Observer { passwordLayout.error = it })
+        viewModel.usernameError.observe(viewLifecycleOwner) { binding.usernameLayout.error = it }
+        viewModel.passwordError.observe(viewLifecycleOwner) { binding.passwordLayout.error = it }
 
-        password.setOnEditorActionListener { _, actionId, _ ->
+        binding.password.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
-                login.performClick()
+                binding.login.performClick()
             }
             true
         }
 
-        login.setOnClickListener {
-            val usernameValue = username.text.toString()
-            val passwordValue = password.text.toString()
+        binding.login.setOnClickListener {
+            val usernameValue = binding.username.text.toString()
+            val passwordValue = binding.password.text.toString()
             when (val response = viewModel.login(usernameValue, passwordValue)) {
                 is LoginResponse.Success -> {
                     viewModel.setLoggedIn(response)
                     findNavController().navigate(LoginFragmentDirections.actionLogin())
                 }
                 is LoginResponse.Error -> {
-                    username.setText("")
-                    password.setText("")
-                    username.requestFocus()
-                    inputMethodManager.showSoftInput(username, InputMethodManager.SHOW_FORCED)
+                    binding.username.setText("")
+                    binding.password.setText("")
+                    binding.username.requestFocus()
+                    inputMethodManager.showSoftInput(
+                        binding.username,
+                        InputMethodManager.SHOW_FORCED
+                    )
                 }
             }
         }
@@ -91,5 +96,10 @@ class LoginFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         hidePlayer()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

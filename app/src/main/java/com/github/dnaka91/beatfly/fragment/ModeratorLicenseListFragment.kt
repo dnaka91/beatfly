@@ -24,16 +24,17 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.github.dnaka91.beatfly.R
 import com.github.dnaka91.beatfly.adapter.ModeratorLicenseListAdapter
+import com.github.dnaka91.beatfly.databinding.ModeratorLicenseListFragmentBinding
 import com.github.dnaka91.beatfly.di.ViewModelFactory
 import com.github.dnaka91.beatfly.viewmodel.ModeratorLicenseListViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.song_license_list_fragment.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class ModeratorLicenseListFragment : Fragment() {
+    private var _binding: ModeratorLicenseListFragmentBinding? = null
+    private val binding get() = _binding!!
 
     @Inject
     internal lateinit var viewModelFactory: ViewModelFactory<ModeratorLicenseListViewModel>
@@ -43,15 +44,17 @@ class ModeratorLicenseListFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? =
-        inflater.inflate(R.layout.moderator_license_list_fragment, container, false)
+    ): View {
+        _binding = ModeratorLicenseListFragmentBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val layoutManager = LinearLayoutManager(requireContext())
         val adapter = ModeratorLicenseListAdapter(this)
-        recyclerview.adapter = adapter
-        recyclerview.layoutManager = layoutManager
-        recyclerview.addItemDecoration(
+        binding.recyclerview.adapter = adapter
+        binding.recyclerview.layoutManager = layoutManager
+        binding.recyclerview.addItemDecoration(
             DividerItemDecoration(
                 requireContext(),
                 layoutManager.orientation
@@ -59,5 +62,10 @@ class ModeratorLicenseListFragment : Fragment() {
         )
 
         adapter.setData(viewModel.licenses)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

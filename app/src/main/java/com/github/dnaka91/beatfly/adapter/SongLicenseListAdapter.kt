@@ -19,14 +19,12 @@ package com.github.dnaka91.beatfly.adapter
 import android.text.Html
 import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.github.dnaka91.beatfly.R
+import com.github.dnaka91.beatfly.databinding.SongLicenseItemBinding
 import com.github.dnaka91.beatfly.model.SongLicense
-import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.song_license_item.*
 import javax.inject.Inject
 
 class SongLicenseListAdapter @Inject constructor(private val fragment: Fragment) :
@@ -35,25 +33,18 @@ class SongLicenseListAdapter @Inject constructor(private val fragment: Fragment)
     private val inflater = LayoutInflater.from(fragment.context)
     private var data = listOf<SongLicense>()
 
-    class ViewHolder(override val containerView: View) :
-        RecyclerView.ViewHolder(containerView),
-        LayoutContainer
+    class ViewHolder(val binding: SongLicenseItemBinding) :
+        RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
-        ViewHolder(
-            inflater.inflate(
-                R.layout.song_license_item,
-                parent,
-                false
-            )
-        )
+        ViewHolder(SongLicenseItemBinding.inflate(inflater, parent, false))
 
     override fun getItemCount(): Int = data.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val license = data[position]
         holder.apply {
-            name.text = Html.fromHtml(
+            binding.name.text = Html.fromHtml(
                 fragment.getString(
                     R.string.song_license_name,
                     license.name.url,
@@ -61,7 +52,7 @@ class SongLicenseListAdapter @Inject constructor(private val fragment: Fragment)
                 ),
                 Html.FROM_HTML_MODE_COMPACT
             )
-            artist.text = Html.fromHtml(
+            binding.artist.text = Html.fromHtml(
                 fragment.getString(
                     R.string.song_license_artist,
                     license.artist.url,
@@ -71,7 +62,7 @@ class SongLicenseListAdapter @Inject constructor(private val fragment: Fragment)
                 ),
                 Html.FROM_HTML_MODE_COMPACT
             )
-            cover.text = Html.fromHtml(
+            binding.cover.text = Html.fromHtml(
                 fragment.getString(
                     R.string.song_license_cover,
                     license.cover.artist.url,
@@ -82,7 +73,7 @@ class SongLicenseListAdapter @Inject constructor(private val fragment: Fragment)
                 Html.FROM_HTML_MODE_COMPACT
             )
 
-            listOf(name, artist, cover).forEach {
+            listOf(binding.name, binding.artist, binding.cover).forEach {
                 it.movementMethod = LinkMovementMethod.getInstance()
             }
         }

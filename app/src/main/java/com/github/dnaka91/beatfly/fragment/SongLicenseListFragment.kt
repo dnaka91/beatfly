@@ -24,16 +24,17 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.github.dnaka91.beatfly.R
 import com.github.dnaka91.beatfly.adapter.SongLicenseListAdapter
+import com.github.dnaka91.beatfly.databinding.SongLicenseListFragmentBinding
 import com.github.dnaka91.beatfly.di.ViewModelFactory
 import com.github.dnaka91.beatfly.viewmodel.SongLicenseListViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.song_license_list_fragment.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class SongLicenseListFragment : Fragment() {
+    private var _binding: SongLicenseListFragmentBinding? = null
+    private val binding get() = _binding!!
 
     @Inject
     internal lateinit var viewModelFactory: ViewModelFactory<SongLicenseListViewModel>
@@ -43,15 +44,17 @@ class SongLicenseListFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? =
-        inflater.inflate(R.layout.song_license_list_fragment, container, false)
+    ): View {
+        _binding = SongLicenseListFragmentBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val layoutManager = LinearLayoutManager(requireContext())
         val adapter = SongLicenseListAdapter(this)
-        recyclerview.adapter = adapter
-        recyclerview.layoutManager = layoutManager
-        recyclerview.addItemDecoration(
+        binding.recyclerview.adapter = adapter
+        binding.recyclerview.layoutManager = layoutManager
+        binding.recyclerview.addItemDecoration(
             DividerItemDecoration(
                 requireContext(),
                 layoutManager.orientation
@@ -59,5 +62,10 @@ class SongLicenseListFragment : Fragment() {
         )
 
         adapter.setData(viewModel.licenses)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

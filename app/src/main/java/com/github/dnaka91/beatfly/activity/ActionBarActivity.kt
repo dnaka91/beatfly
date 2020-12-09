@@ -21,17 +21,19 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.github.dnaka91.beatfly.R
+import com.github.dnaka91.beatfly.databinding.ActivityActionbarBinding
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_actionbar.*
 
 @AndroidEntryPoint
 class ActionBarActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityActionbarBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_actionbar)
-        setSupportActionBar(toolbar)
+        binding = ActivityActionbarBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        setSupportActionBar(binding.toolbar)
 
-        toolbar.setupWithNavController(findNavController(R.id.nav_host_fragment))
+        binding.toolbar.setupWithNavController(findNavController(R.id.nav_host_fragment))
     }
 }

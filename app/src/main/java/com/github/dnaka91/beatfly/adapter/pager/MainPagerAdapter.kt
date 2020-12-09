@@ -17,7 +17,6 @@
 package com.github.dnaka91.beatfly.adapter.pager
 
 import android.content.Context
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.github.dnaka91.beatfly.AppPreferences
@@ -32,7 +31,7 @@ import kotlin.math.max
 class MainPagerAdapter @Inject constructor(ctx: Context, fm: FragmentManager) :
     FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
-    private val fragments = listOf<Pair<String, () -> Fragment>>(
+    private val fragments = listOf(
         ctx.getString(R.string.main_tab_header_song) to { SongDetailFragment() },
         ctx.getString(R.string.main_tab_header_history) to { HistoryListFragment() },
         if (AppPreferences.moderator) {
