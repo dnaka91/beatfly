@@ -20,12 +20,12 @@ import android.content.Context
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
+import com.github.dnaka91.beatfly.AppPreferences
 import com.github.dnaka91.beatfly.R
 import com.github.dnaka91.beatfly.fragment.HistoryListFragment
 import com.github.dnaka91.beatfly.fragment.ModeratorListFragment
 import com.github.dnaka91.beatfly.fragment.ReviewListFragment
 import com.github.dnaka91.beatfly.fragment.SongDetailFragment
-import org.jetbrains.anko.defaultSharedPreferences
 import javax.inject.Inject
 import kotlin.math.max
 
@@ -35,7 +35,7 @@ class MainPagerAdapter @Inject constructor(ctx: Context, fm: FragmentManager) :
     private val fragments = listOf<Pair<String, () -> Fragment>>(
         ctx.getString(R.string.main_tab_header_song) to { SongDetailFragment() },
         ctx.getString(R.string.main_tab_header_history) to { HistoryListFragment() },
-        if (ctx.defaultSharedPreferences.getBoolean("moderator", false)) {
+        if (AppPreferences.moderator) {
             ctx.getString(R.string.main_tab_header_reviews) to { ReviewListFragment() }
         } else {
             ctx.getString(R.string.main_tab_header_moderators) to { ModeratorListFragment() }

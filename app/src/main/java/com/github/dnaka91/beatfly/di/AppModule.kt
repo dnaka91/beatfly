@@ -16,26 +16,26 @@
  */
 package com.github.dnaka91.beatfly.di
 
-import android.app.Application
 import android.content.Context
 import android.view.inputmethod.InputMethodManager
 import androidx.core.app.NotificationManagerCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import com.github.dnaka91.beatfly.BeatFlyApp
 import com.github.dnaka91.beatfly.service.LocalRadioService
 import com.github.dnaka91.beatfly.service.RadioService
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
 @Module(includes = [AppModule.Bindings::class])
+@InstallIn(SingletonComponent::class)
 class AppModule {
     @Module
+    @InstallIn(SingletonComponent::class)
     interface Bindings {
-        @Singleton
-        @Binds
-        fun bindApplication(app: BeatFlyApp): Application
 
         @Singleton
         @Binds
@@ -44,20 +44,16 @@ class AppModule {
 
     @Singleton
     @Provides
-    fun provideContext(app: Application): Context = app.applicationContext
-
-    @Singleton
-    @Provides
-    fun provideLocalBroadcastManager(context: Context): LocalBroadcastManager =
+    fun provideLocalBroadcastManager(@ApplicationContext context: Context): LocalBroadcastManager =
         LocalBroadcastManager.getInstance(context)
 
     @Singleton
     @Provides
-    fun provideNotificationManagerCompat(context: Context): NotificationManagerCompat =
+    fun provideNotificationManagerCompat(@ApplicationContext context: Context): NotificationManagerCompat =
         NotificationManagerCompat.from(context)
 
     @Singleton
     @Provides
-    fun provideInputMethodManager(context: Context): InputMethodManager =
+    fun provideInputMethodManager(@ApplicationContext context: Context): InputMethodManager =
         context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
 }

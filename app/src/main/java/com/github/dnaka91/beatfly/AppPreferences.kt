@@ -14,11 +14,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package com.github.dnaka91.beatfly.di.scope
+package com.github.dnaka91.beatfly
 
-import javax.inject.Scope
-import kotlin.annotation.AnnotationRetention.RUNTIME
+import splitties.preferences.DefaultPreferences
 
-@Scope
-@Retention(RUNTIME)
-annotation class FragmentScope
+object AppPreferences : DefaultPreferences() {
+    var moderator by boolPref()
+    var logged_in by boolPref()
+}

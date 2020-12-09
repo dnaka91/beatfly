@@ -20,9 +20,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
-import androidx.lifecycle.get
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -30,20 +30,16 @@ import com.github.dnaka91.beatfly.R
 import com.github.dnaka91.beatfly.adapter.ReviewListAdapter
 import com.github.dnaka91.beatfly.di.ViewModelFactory
 import com.github.dnaka91.beatfly.viewmodel.ReviewListViewModel
-import dagger.android.support.DaggerFragment
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.review_list_fragment.*
 import javax.inject.Inject
 
-class ReviewListFragment : DaggerFragment() {
+@AndroidEntryPoint
+class ReviewListFragment : Fragment() {
 
     @Inject
     internal lateinit var viewModelFactory: ViewModelFactory<ReviewListViewModel>
-    private lateinit var viewModel: ReviewListViewModel
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get()
-    }
+    private val viewModel by viewModels<ReviewListViewModel> { viewModelFactory }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -65,7 +61,7 @@ class ReviewListFragment : DaggerFragment() {
             )
         )
 
-        viewModel.reviews.observe(this, Observer {
+        viewModel.reviews.observe(viewLifecycleOwner, Observer {
             adapter.setData(it.orEmpty())
         })
     }

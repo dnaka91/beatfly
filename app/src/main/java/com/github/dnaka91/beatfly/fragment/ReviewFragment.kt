@@ -20,31 +20,27 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
-import androidx.lifecycle.get
 import androidx.navigation.fragment.navArgs
 import com.github.dnaka91.beatfly.R
 import com.github.dnaka91.beatfly.di.ViewModelFactory
-import com.github.dnaka91.beatfly.di.base.DaggerBottomSheetDialogFragment
 import com.github.dnaka91.beatfly.viewmodel.ReviewViewModel
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.review_fragment.*
 import javax.inject.Inject
 
-class ReviewFragment : DaggerBottomSheetDialogFragment() {
+@AndroidEntryPoint
+class ReviewFragment : BottomSheetDialogFragment() {
 
     @Inject
     internal lateinit var viewModelFactory: ViewModelFactory<ReviewViewModel>
-    private lateinit var viewModel: ReviewViewModel
+    private val viewModel by viewModels<ReviewViewModel> { viewModelFactory }
 
     private val args: ReviewFragmentArgs by navArgs()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get()
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -56,7 +52,7 @@ class ReviewFragment : DaggerBottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         header.text = getString(args.header)
 
-        viewModel.messageError.observe(this, Observer { reviewLayout.error = it })
+        viewModel.messageError.observe(viewLifecycleOwner, Observer { reviewLayout.error = it })
 
         submit.setOnClickListener {
             if (viewModel.submit(rating.numStars, review.text.toString())) {

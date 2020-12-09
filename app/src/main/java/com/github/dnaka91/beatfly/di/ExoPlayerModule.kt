@@ -24,14 +24,21 @@ import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import com.google.android.exoplayer2.util.Util
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
 @Module
+@InstallIn(SingletonComponent::class)
 class ExoPlayerModule {
     @Singleton
     @Provides
-    fun provideDataSourceFactory(context: Context): DataSource.Factory =
-        DefaultDataSourceFactory(context, Util.getUserAgent(context, context.getString(R.string.app_name)))
+    fun provideDataSourceFactory(@ApplicationContext context: Context): DataSource.Factory =
+        DefaultDataSourceFactory(
+            context,
+            Util.getUserAgent(context, context.getString(R.string.app_name))
+        )
 
     @Provides
     fun provideMediaSourceFactory(dataSourceFactory: DataSource.Factory): ProgressiveMediaSource.Factory =

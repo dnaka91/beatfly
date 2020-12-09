@@ -28,7 +28,7 @@ import com.github.dnaka91.beatfly.model.Moderator
 import com.github.dnaka91.beatfly.thirdparty.glide.GlideApp
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.moderator_item.*
-import org.jetbrains.anko.support.v4.dip
+import splitties.dimensions.dip
 import javax.inject.Inject
 
 class ModeratorListAdapter @Inject constructor(private val fragment: Fragment) :
@@ -65,7 +65,7 @@ class ModeratorListAdapter @Inject constructor(private val fragment: Fragment) :
             GlideApp.with(fragment)
                 .load(moderator.picture.url)
                 .placeholder(R.drawable.placeholder_moderator)
-                .transform(RoundedCorners(fragment.dip(4)))
+                .transform(RoundedCorners(fragment.requireContext().dip(4)))
                 .transition(withCrossFade())
                 .into(picture)
         }

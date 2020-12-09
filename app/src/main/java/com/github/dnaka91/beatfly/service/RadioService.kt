@@ -17,7 +17,12 @@
 package com.github.dnaka91.beatfly.service
 
 import androidx.lifecycle.LiveData
-import com.github.dnaka91.beatfly.model.*
+import com.github.dnaka91.beatfly.model.LoginResponse
+import com.github.dnaka91.beatfly.model.Moderator
+import com.github.dnaka91.beatfly.model.ModeratorLicense
+import com.github.dnaka91.beatfly.model.Review
+import com.github.dnaka91.beatfly.model.Song
+import com.github.dnaka91.beatfly.model.SongLicense
 
 interface RadioService {
     fun currentSong(): LiveData<Song>

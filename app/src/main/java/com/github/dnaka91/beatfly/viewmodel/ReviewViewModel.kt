@@ -21,14 +21,18 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.github.dnaka91.beatfly.R
+import dagger.hilt.android.qualifiers.ActivityContext
 import javax.inject.Inject
 
-class ReviewViewModel @Inject constructor(private val context: Context) : ViewModel() {
+class ReviewViewModel @Inject constructor(
+    @ActivityContext private val context: Context
+) : ViewModel() {
     private val _messageError = MutableLiveData<String>()
 
     val messageError: LiveData<String>
         get() = _messageError
 
+    @Suppress("UNUSED_PARAMETER")
     fun submit(rating: Int, message: String): Boolean {
         val errors = mutableMapOf<String, String?>(
             "message" to null

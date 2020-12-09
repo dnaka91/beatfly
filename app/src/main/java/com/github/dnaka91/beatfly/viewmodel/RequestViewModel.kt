@@ -21,9 +21,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.github.dnaka91.beatfly.R
+import dagger.hilt.android.qualifiers.ActivityContext
 import javax.inject.Inject
 
-class RequestViewModel @Inject constructor(private val context: Context) : ViewModel() {
+class RequestViewModel @Inject constructor(
+    @ActivityContext private val context: Context
+) : ViewModel() {
     private val _songError = MutableLiveData<String>()
     private val _artistError = MutableLiveData<String>()
 

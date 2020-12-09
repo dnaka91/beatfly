@@ -20,30 +20,30 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProviders
-import androidx.lifecycle.get
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.dnaka91.beatfly.R
 import com.github.dnaka91.beatfly.adapter.ModeratorLicenseListAdapter
 import com.github.dnaka91.beatfly.di.ViewModelFactory
 import com.github.dnaka91.beatfly.viewmodel.ModeratorLicenseListViewModel
-import dagger.android.support.DaggerFragment
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.song_license_list_fragment.*
 import javax.inject.Inject
 
-class ModeratorLicenseListFragment : DaggerFragment() {
+@AndroidEntryPoint
+class ModeratorLicenseListFragment : Fragment() {
 
     @Inject
     internal lateinit var viewModelFactory: ViewModelFactory<ModeratorLicenseListViewModel>
-    private lateinit var viewModel: ModeratorLicenseListViewModel
+    private val viewModel by viewModels<ModeratorLicenseListViewModel> { viewModelFactory }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get()
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? =
         inflater.inflate(R.layout.moderator_license_list_fragment, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -51,7 +51,12 @@ class ModeratorLicenseListFragment : DaggerFragment() {
         val adapter = ModeratorLicenseListAdapter(this)
         recyclerview.adapter = adapter
         recyclerview.layoutManager = layoutManager
-        recyclerview.addItemDecoration(DividerItemDecoration(requireContext(), layoutManager.orientation))
+        recyclerview.addItemDecoration(
+            DividerItemDecoration(
+                requireContext(),
+                layoutManager.orientation
+            )
+        )
 
         adapter.setData(viewModel.licenses)
     }

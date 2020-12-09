@@ -20,9 +20,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
-import androidx.lifecycle.get
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -30,22 +30,22 @@ import com.github.dnaka91.beatfly.R
 import com.github.dnaka91.beatfly.adapter.ModeratorListAdapter
 import com.github.dnaka91.beatfly.di.ViewModelFactory
 import com.github.dnaka91.beatfly.viewmodel.ModeratorListViewModel
-import dagger.android.support.DaggerFragment
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.moderator_list_fragment.*
 import javax.inject.Inject
 
-class ModeratorListFragment : DaggerFragment() {
+@AndroidEntryPoint
+class ModeratorListFragment : Fragment() {
 
     @Inject
     internal lateinit var viewModelFactory: ViewModelFactory<ModeratorListViewModel>
-    private lateinit var viewModel: ModeratorListViewModel
+    private val viewModel by viewModels<ModeratorListViewModel> { viewModelFactory }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get()
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? =
         inflater.inflate(R.layout.moderator_list_fragment, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -54,9 +54,14 @@ class ModeratorListFragment : DaggerFragment() {
         recyclerview.adapter = adapter
         recyclerview.layoutManager = layoutManager
         recyclerview.itemAnimator = DefaultItemAnimator()
-        recyclerview.addItemDecoration(DividerItemDecoration(requireContext(), layoutManager.orientation))
+        recyclerview.addItemDecoration(
+            DividerItemDecoration(
+                requireContext(),
+                layoutManager.orientation
+            )
+        )
 
-        viewModel.moderators.observe(this, Observer {
+        viewModel.moderators.observe(viewLifecycleOwner, Observer {
             adapter.setData(it.orEmpty())
         })
     }

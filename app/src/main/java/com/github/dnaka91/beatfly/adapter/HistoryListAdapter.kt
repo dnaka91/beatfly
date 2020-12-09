@@ -28,10 +28,10 @@ import com.github.dnaka91.beatfly.model.Song
 import com.github.dnaka91.beatfly.thirdparty.glide.GlideApp
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.history_item.*
-import org.jetbrains.anko.support.v4.dip
-import org.threeten.bp.Duration
-import org.threeten.bp.LocalTime
+import java.time.Duration
+import java.time.LocalTime
 import javax.inject.Inject
+import splitties.dimensions.dip
 
 class HistoryListAdapter @Inject constructor(private val fragment: Fragment) :
     RecyclerView.Adapter<HistoryListAdapter.ViewHolder>() {
@@ -72,7 +72,7 @@ class HistoryListAdapter @Inject constructor(private val fragment: Fragment) :
             GlideApp.with(fragment)
                 .load(song.cover.url)
                 .placeholder(R.drawable.placeholder_history)
-                .transform(RoundedCorners(fragment.dip(4)))
+                .transform(RoundedCorners(fragment.requireContext().dip(4)))
                 .transition(withCrossFade())
                 .into(picture)
         }

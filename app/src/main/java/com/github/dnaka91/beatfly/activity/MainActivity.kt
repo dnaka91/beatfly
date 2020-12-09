@@ -19,20 +19,23 @@ package com.github.dnaka91.beatfly.activity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.navigation.findNavController
 import com.github.dnaka91.beatfly.NavGraphDirections
 import com.github.dnaka91.beatfly.R
-import dagger.android.support.DaggerAppCompatActivity
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : DaggerAppCompatActivity() {
-
+@AndroidEntryPoint
+class MainActivity : AppCompatActivity() {
+   
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
-        toolbar.overflowIcon = getDrawable(R.drawable.ic_more_vert_24)
+        toolbar.overflowIcon = ContextCompat.getDrawable(this, R.drawable.ic_more_vert_24)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

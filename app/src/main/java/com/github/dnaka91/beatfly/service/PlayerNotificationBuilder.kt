@@ -16,7 +16,10 @@
  */
 package com.github.dnaka91.beatfly.service
 
-import android.app.*
+import android.app.Notification
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.Service
 import android.content.Context
 import android.os.Build
 import androidx.annotation.DrawableRes
@@ -27,13 +30,15 @@ import androidx.core.app.NotificationManagerCompat
 import androidx.media.app.NotificationCompat.MediaStyle
 import com.github.dnaka91.beatfly.R
 import com.github.dnaka91.beatfly.model.Song
-import org.jetbrains.anko.intentFor
+import dagger.hilt.android.qualifiers.ApplicationContext
+import splitties.intents.intent
+import splitties.intents.toPendingService
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class PlayerNotificationBuilder @Inject constructor(
-    private val context: Context,
+    @ApplicationContext   private val context: Context,
     private val notificationManager: NotificationManagerCompat
 ) {
     fun start(service: Service, song: Song?) {
@@ -100,11 +105,9 @@ class PlayerNotificationBuilder @Inject constructor(
     )
 
     private fun buildPendingIntent(@DrawableRes icon: Int, @StringRes title: Int, action: String) =
-        context.intentFor<PlayerService>()
-            .also { it.action = action }
-            .let { PendingIntent.getService(context, 0, it, 0) }
+        PlayerService.intent { _ -> this.action = action }
+            .toPendingService()
             .let { NotificationCompat.Action(icon, context.getString(title), it) }
-
 
     companion object {
         private const val NOTIFICATION_CHANNEL = "com.github.dnaka91.beatfly.NOW_PLAYING"

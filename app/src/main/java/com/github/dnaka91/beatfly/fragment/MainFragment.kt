@@ -21,22 +21,28 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
-import android.view.*
-import androidx.core.content.edit
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.navigation.fragment.findNavController
+import com.github.dnaka91.beatfly.AppPreferences
 import com.github.dnaka91.beatfly.R
 import com.github.dnaka91.beatfly.adapter.pager.MainPagerAdapter
 import com.github.dnaka91.beatfly.extension.showPlayer
 import com.github.dnaka91.beatfly.extension.startService
 import com.github.dnaka91.beatfly.service.PlayerService
-import dagger.android.support.DaggerFragment
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.main_fragment.*
-import org.jetbrains.anko.support.v4.defaultSharedPreferences
 import javax.inject.Inject
 
-class MainFragment : DaggerFragment() {
+@AndroidEntryPoint
+class MainFragment : Fragment() {
 
     @Inject
     internal lateinit var localBroadcastManager: LocalBroadcastManager
@@ -79,7 +85,7 @@ class MainFragment : DaggerFragment() {
 
     override fun onResume() {
         super.onResume()
-        if (!defaultSharedPreferences.getBoolean("logged_in", false)) {
+        if (!AppPreferences.logged_in) {
             startService<PlayerService>(PlayerService.ACTION_STOP)
             findNavController().navigate(MainFragmentDirections.actionLogout())
             return
@@ -115,9 +121,7 @@ class MainFragment : DaggerFragment() {
             true
         }
         R.id.action_logout -> {
-            defaultSharedPreferences.edit {
-                putBoolean("logged_in", false)
-            }
+            AppPreferences.logged_in = false
             startService<PlayerService>(PlayerService.ACTION_STOP)
             findNavController().navigate(MainFragmentDirections.actionLogout())
             true

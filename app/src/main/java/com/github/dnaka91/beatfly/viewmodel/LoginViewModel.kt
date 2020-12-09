@@ -17,18 +17,19 @@
 package com.github.dnaka91.beatfly.viewmodel
 
 import android.content.Context
-import androidx.core.content.edit
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.github.dnaka91.beatfly.AppPreferences
 import com.github.dnaka91.beatfly.R
 import com.github.dnaka91.beatfly.model.LoginResponse
 import com.github.dnaka91.beatfly.service.RadioService
-import org.jetbrains.anko.defaultSharedPreferences
+import dagger.hilt.android.qualifiers.ActivityContext
+import splitties.preferences.edit
 import javax.inject.Inject
 
 class LoginViewModel @Inject constructor(
-    private val context: Context,
+    @ActivityContext   private val context: Context,
     private val radioService: RadioService
 ) : ViewModel() {
     private val _usernameError = MutableLiveData<String>()
@@ -67,14 +68,12 @@ class LoginViewModel @Inject constructor(
         return response
     }
 
-    fun isModerator(username: String): Boolean = username.startsWith("mod")
-
     fun setLoggedIn(response: LoginResponse.Success) {
-        context.defaultSharedPreferences.edit {
-            putBoolean("logged_in", true)
-            putBoolean("moderator", response.moderator)
+        AppPreferences.edit {
+            logged_in = true
+            moderator = response.moderator
         }
     }
 
-    fun isLoggedIn() = context.defaultSharedPreferences.getBoolean("logged_in", false)
+    fun isLoggedIn() = AppPreferences.logged_in
 }

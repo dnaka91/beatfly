@@ -22,31 +22,28 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
-import androidx.lifecycle.get
 import androidx.navigation.fragment.findNavController
 import com.github.dnaka91.beatfly.R
 import com.github.dnaka91.beatfly.di.ViewModelFactory
 import com.github.dnaka91.beatfly.extension.hidePlayer
 import com.github.dnaka91.beatfly.model.LoginResponse
 import com.github.dnaka91.beatfly.viewmodel.LoginViewModel
-import dagger.android.support.DaggerFragment
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.login_fragment.*
 import javax.inject.Inject
 
-class LoginFragment : DaggerFragment() {
+@AndroidEntryPoint
+class LoginFragment : Fragment() {
 
     @Inject
     internal lateinit var inputMethodManager: InputMethodManager
+
     @Inject
     internal lateinit var viewModelFactory: ViewModelFactory<LoginViewModel>
-    private lateinit var viewModel: LoginViewModel
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get()
-    }
+    private val viewModel by viewModels<LoginViewModel> { viewModelFactory }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -56,8 +53,8 @@ class LoginFragment : DaggerFragment() {
         inflater.inflate(R.layout.login_fragment, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        viewModel.usernameError.observe(this, Observer { usernameLayout.error = it })
-        viewModel.passwordError.observe(this, Observer { passwordLayout.error = it })
+        viewModel.usernameError.observe(viewLifecycleOwner, Observer { usernameLayout.error = it })
+        viewModel.passwordError.observe(viewLifecycleOwner, Observer { passwordLayout.error = it })
 
         password.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {

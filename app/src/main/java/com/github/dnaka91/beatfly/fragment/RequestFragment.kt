@@ -20,35 +20,35 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
-import androidx.lifecycle.get
 import com.github.dnaka91.beatfly.R
 import com.github.dnaka91.beatfly.di.ViewModelFactory
-import com.github.dnaka91.beatfly.di.base.DaggerBottomSheetDialogFragment
 import com.github.dnaka91.beatfly.viewmodel.RequestViewModel
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.request_fragment.*
 import javax.inject.Inject
 
-class RequestFragment : DaggerBottomSheetDialogFragment() {
+@AndroidEntryPoint
+class RequestFragment : BottomSheetDialogFragment() {
 
     @Inject
     internal lateinit var viewModelFactory: ViewModelFactory<RequestViewModel>
-    private lateinit var viewModel: RequestViewModel
+    private val viewModel by viewModels<RequestViewModel> { viewModelFactory }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get()
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? =
         inflater.inflate(R.layout.request_fragment, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        viewModel.songError.observe(this, Observer { songLayout.error = it })
-        viewModel.artistError.observe(this, Observer { artistLayout.error = it })
+        viewModel.songError.observe(viewLifecycleOwner, Observer { songLayout.error = it })
+        viewModel.artistError.observe(viewLifecycleOwner, Observer { artistLayout.error = it })
 
         submit.setOnClickListener {
             if (viewModel.submit(song.text.toString(), artist.text.toString())) {

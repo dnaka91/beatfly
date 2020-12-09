@@ -24,12 +24,17 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.github.dnaka91.beatfly.R
 import com.github.dnaka91.beatfly.extension.hidePlayer
-import dagger.android.support.DaggerFragment
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.about_fragment.*
 
-class AboutFragment : DaggerFragment() {
+@AndroidEntryPoint
+class AboutFragment : Fragment() {
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? =
         inflater.inflate(R.layout.about_fragment, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
