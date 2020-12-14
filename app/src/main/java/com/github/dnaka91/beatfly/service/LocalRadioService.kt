@@ -23,8 +23,6 @@ import android.content.IntentFilter
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import com.github.dnaka91.beatfly.extension.buffered
-import com.github.dnaka91.beatfly.extension.toSource
 import com.github.dnaka91.beatfly.model.LoginResponse
 import com.github.dnaka91.beatfly.model.Moderator
 import com.github.dnaka91.beatfly.model.ModeratorLicense
@@ -33,14 +31,15 @@ import com.github.dnaka91.beatfly.model.Song
 import com.github.dnaka91.beatfly.model.SongLicense
 import com.github.dnaka91.beatfly.model.User
 import com.squareup.moshi.JsonAdapter
-import dagger.hilt.android.qualifiers.ActivityContext
 import dagger.hilt.android.qualifiers.ApplicationContext
+import okio.buffer
+import okio.source
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class LocalRadioService @Inject constructor(
-    @ApplicationContext  context: Context,
+    @ApplicationContext context: Context,
     localBroadcastManager: LocalBroadcastManager,
     songAdapter: JsonAdapter<List<Song>>,
     modAdapter: JsonAdapter<List<Moderator>>,
@@ -123,8 +122,8 @@ class LocalRadioService @Inject constructor(
 
         private fun <T> Context.loadJson(file: String, adapter: JsonAdapter<List<T>>) =
             assets.open(file)
-                .toSource()
-                .buffered()
+                .source()
+                .buffer()
                 .use(adapter::fromJson)
                 .orEmpty()
     }

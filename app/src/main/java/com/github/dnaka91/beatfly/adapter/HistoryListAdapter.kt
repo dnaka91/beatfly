@@ -20,13 +20,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
+import coil.load
+import coil.transform.RoundedCornersTransformation
 import com.github.dnaka91.beatfly.R
 import com.github.dnaka91.beatfly.databinding.HistoryItemBinding
 import com.github.dnaka91.beatfly.model.Song
-import com.github.dnaka91.beatfly.thirdparty.glide.GlideApp
-import splitties.dimensions.dip
+import splitties.dimensions.dp
 import java.time.Duration
 import java.time.LocalTime
 import javax.inject.Inject
@@ -60,12 +59,11 @@ class HistoryListAdapter @Inject constructor(private val fragment: Fragment) :
                 Duration.ofNanos(time.nano.toLong()).toMillis()
             )
 
-            GlideApp.with(fragment)
-                .load(song.cover.url)
-                .placeholder(R.drawable.placeholder_history)
-                .transform(RoundedCorners(fragment.requireContext().dip(4)))
-                .transition(withCrossFade())
-                .into(binding.picture)
+            binding.picture.load(song.cover.url) {
+                placeholder(R.drawable.placeholder_history)
+                transformations(RoundedCornersTransformation(fragment.requireContext().dp(4)))
+                crossfade(true)
+            }
         }
     }
 

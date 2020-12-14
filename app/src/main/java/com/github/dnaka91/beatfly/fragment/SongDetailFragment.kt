@@ -22,14 +22,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
+import coil.load
+import coil.transform.RoundedCornersTransformation
 import com.github.dnaka91.beatfly.R
 import com.github.dnaka91.beatfly.databinding.SongDetailFragmentBinding
 import com.github.dnaka91.beatfly.service.RadioService
-import com.github.dnaka91.beatfly.thirdparty.glide.GlideApp
 import dagger.hilt.android.AndroidEntryPoint
-import splitties.dimensions.dip
+import splitties.dimensions.dp
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -57,12 +56,11 @@ class SongDetailFragment : Fragment() {
             binding.album.text = it.album
             binding.artist.text = it.artist
 
-            GlideApp.with(this)
-                .load(it.cover.url)
-                .placeholder(R.drawable.placeholder_album)
-                .transform(RoundedCorners(requireContext().dip(8)))
-                .transition(withCrossFade())
-                .into(binding.picture)
+            binding.picture.load(it.cover.url) {
+                placeholder(R.drawable.placeholder_album)
+                transformations(RoundedCornersTransformation(requireContext().dp(8)))
+                crossfade(true)
+            }
         })
     }
 

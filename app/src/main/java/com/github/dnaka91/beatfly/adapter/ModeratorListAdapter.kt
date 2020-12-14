@@ -20,13 +20,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
+import coil.load
+import coil.transform.RoundedCornersTransformation
 import com.github.dnaka91.beatfly.R
 import com.github.dnaka91.beatfly.databinding.ModeratorItemBinding
 import com.github.dnaka91.beatfly.model.Moderator
-import com.github.dnaka91.beatfly.thirdparty.glide.GlideApp
-import splitties.dimensions.dip
+import splitties.dimensions.dp
 import javax.inject.Inject
 
 class ModeratorListAdapter @Inject constructor(private val fragment: Fragment) :
@@ -53,12 +52,11 @@ class ModeratorListAdapter @Inject constructor(private val fragment: Fragment) :
                 moderator.rateCount
             )
 
-            GlideApp.with(fragment)
-                .load(moderator.picture.url)
-                .placeholder(R.drawable.placeholder_moderator)
-                .transform(RoundedCorners(fragment.requireContext().dip(4)))
-                .transition(withCrossFade())
-                .into(binding.picture)
+            binding.picture.load(moderator.picture.url) {
+                placeholder(R.drawable.placeholder_moderator)
+                transformations(RoundedCornersTransformation(fragment.requireContext().dp(4)))
+                crossfade(true)
+            }
         }
     }
 
