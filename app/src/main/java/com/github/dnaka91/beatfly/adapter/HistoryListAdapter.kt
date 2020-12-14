@@ -25,7 +25,7 @@ import coil.transform.RoundedCornersTransformation
 import com.github.dnaka91.beatfly.R
 import com.github.dnaka91.beatfly.databinding.HistoryItemBinding
 import com.github.dnaka91.beatfly.model.Song
-import splitties.dimensions.dp
+import splitties.dimensions.dip
 import java.time.Duration
 import java.time.LocalTime
 import javax.inject.Inject
@@ -61,7 +61,7 @@ class HistoryListAdapter @Inject constructor(private val fragment: Fragment) :
 
             binding.picture.load(song.cover.url) {
                 placeholder(R.drawable.placeholder_history)
-                transformations(RoundedCornersTransformation(fragment.requireContext().dp(4)))
+                transformations(RoundedCornersTransformation(fragment.requireContext().dip(4f)))
                 crossfade(true)
             }
         }

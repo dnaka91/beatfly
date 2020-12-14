@@ -25,7 +25,7 @@ import coil.transform.RoundedCornersTransformation
 import com.github.dnaka91.beatfly.R
 import com.github.dnaka91.beatfly.databinding.ModeratorItemBinding
 import com.github.dnaka91.beatfly.model.Moderator
-import splitties.dimensions.dp
+import splitties.dimensions.dip
 import javax.inject.Inject
 
 class ModeratorListAdapter @Inject constructor(private val fragment: Fragment) :
@@ -54,7 +54,7 @@ class ModeratorListAdapter @Inject constructor(private val fragment: Fragment) :
 
             binding.picture.load(moderator.picture.url) {
                 placeholder(R.drawable.placeholder_moderator)
-                transformations(RoundedCornersTransformation(fragment.requireContext().dp(4)))
+                transformations(RoundedCornersTransformation(fragment.requireContext().dip(4f)))
                 crossfade(true)
             }
         }

@@ -21,7 +21,12 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.navigation.fragment.findNavController
@@ -84,7 +89,7 @@ class MainFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        if (!AppPreferences.logged_in) {
+        if (!AppPreferences.loggedIn) {
             startService<PlayerService>(PlayerService.ACTION_STOP)
             findNavController().navigate(MainFragmentDirections.actionLogout())
             return
@@ -125,7 +130,7 @@ class MainFragment : Fragment() {
             true
         }
         R.id.action_logout -> {
-            AppPreferences.logged_in = false
+            AppPreferences.loggedIn = false
             startService<PlayerService>(PlayerService.ACTION_STOP)
             findNavController().navigate(MainFragmentDirections.actionLogout())
             true

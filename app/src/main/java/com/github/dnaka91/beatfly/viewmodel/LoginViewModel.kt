@@ -27,7 +27,6 @@ import com.github.dnaka91.beatfly.model.LoginResponse
 import com.github.dnaka91.beatfly.service.RadioService
 import dagger.hilt.android.qualifiers.ActivityContext
 import splitties.preferences.edit
-import javax.inject.Inject
 
 class LoginViewModel @ViewModelInject constructor(
     @ActivityContext   private val context: Context,
@@ -71,10 +70,10 @@ class LoginViewModel @ViewModelInject constructor(
 
     fun setLoggedIn(response: LoginResponse.Success) {
         AppPreferences.edit {
-            logged_in = true
+            loggedIn = true
             moderator = response.moderator
         }
     }
 
-    fun isLoggedIn() = AppPreferences.logged_in
+    fun isLoggedIn() = AppPreferences.loggedIn
 }

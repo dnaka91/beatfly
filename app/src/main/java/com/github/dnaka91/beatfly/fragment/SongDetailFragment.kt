@@ -28,7 +28,7 @@ import com.github.dnaka91.beatfly.R
 import com.github.dnaka91.beatfly.databinding.SongDetailFragmentBinding
 import com.github.dnaka91.beatfly.service.RadioService
 import dagger.hilt.android.AndroidEntryPoint
-import splitties.dimensions.dp
+import splitties.dimensions.dip
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -58,7 +58,7 @@ class SongDetailFragment : Fragment() {
 
             binding.picture.load(it.cover.url) {
                 placeholder(R.drawable.placeholder_album)
-                transformations(RoundedCornersTransformation(requireContext().dp(8)))
+                transformations(RoundedCornersTransformation(requireContext().dip(8f)))
                 crossfade(true)
             }
         })

@@ -19,6 +19,6 @@ package com.github.dnaka91.beatfly
 import splitties.preferences.DefaultPreferences
 
 object AppPreferences : DefaultPreferences() {
-    var moderator by boolPref()
-    var logged_in by boolPref()
+    var moderator by boolPref("moderator", false)
+    var loggedIn by boolPref("logged_in", false)
 }
