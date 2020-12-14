@@ -22,3 +22,5 @@
 
 -allowaccessmodification
 -repackageclasses
+
+-dontwarn java.lang.ClassValue
